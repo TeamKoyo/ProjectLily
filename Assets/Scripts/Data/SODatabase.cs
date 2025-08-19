@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "DataTable", menuName = "Scriptable Objects/DataTable")]
-public class SODataTable : ScriptableObject
+public class SODatabase : ScriptableObject
 {
     public List<CardData> cards;
     public List<CharData> chars;

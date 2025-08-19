@@ -10,11 +10,10 @@ using UnityEngine;
 public class CSVImporter : EditorWindow
 {
     private UnityEngine.Object excelFile;
-    private string outputPath = "Assets/ScriptableObjects/Card";
+    private string outputPath = "Assets/ScriptableObjects";
     private DataSet excelDataSet;
     private List<string> sheetNames = new List<string>();
-    private SODataTable data;
-    private string assetName = "CardData.asset";
+    private SODatabase data;
 
     [MenuItem("Tools/Excel → ScriptableObject 변환기")]
     public static void ShowWindow()
@@ -28,7 +27,7 @@ public class CSVImporter : EditorWindow
         UnityEngine.Object newExcelFile = EditorGUILayout.ObjectField("Excel File", excelFile, typeof(UnityEngine.Object), false);
         outputPath = EditorGUILayout.TextField("Output Folder", outputPath);
 
-        data = AssetDatabase.LoadAssetAtPath<SODataTable>(Path.Combine(outputPath, assetName));
+        data = AssetDatabase.LoadAssetAtPath<SODatabase>(Path.Combine(outputPath, excelFile.name + ".asset"));
 
         if (newExcelFile != excelFile)
         {
@@ -83,12 +82,12 @@ public class CSVImporter : EditorWindow
 
     private void CreateDataAsset()
     {
-        data = ScriptableObject.CreateInstance<SODataTable>();
+        data = ScriptableObject.CreateInstance<SODatabase>();
 
         if (!Directory.Exists(outputPath))
             Directory.CreateDirectory(outputPath);
 
-        string savePath = Path.Combine(outputPath, assetName);
+        string savePath = Path.Combine(outputPath, excelFile.name + ".asset");
         AssetDatabase.CreateAsset(data, savePath);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
@@ -122,7 +121,7 @@ public class CSVImporter : EditorWindow
         Debug.Log($"{sheetName} 갱신");
     }
 
-    private Dictionary<string, Action<DataTable, SODataTable>> importDic;
+    private Dictionary<string, Action<DataTable, SODatabase>> importDic;
 
     private void RegistDic(DataTable table)
     {
