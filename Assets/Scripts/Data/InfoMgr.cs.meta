@@ -1,16 +1,2 @@
 fileFormatVersion: 2
 guid: b1361016180ed3544bd7548ee80d6592
-MonoImporter:
-  externalObjects: {}
-  serializedVersion: 2
-  defaultReferences:
-  - cardTable: {fileID: 11400000, guid: ec3f6b688163cdc45b4d5dfd6b5fd731, type: 2}
-  - cardPrefab: {instanceID: 0}
-  - charTable: {instanceID: 0}
-  - charPrefab: {instanceID: 0}
-  - enemyPrefab: {instanceID: 0}
-  executionOrder: 0
-  icon: {instanceID: 0}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
