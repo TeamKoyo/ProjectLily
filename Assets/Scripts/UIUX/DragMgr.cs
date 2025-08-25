@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DragMgr : MonoBehaviour
 {
-    public static DragMgr Instance { get; private set; } // 읽기 전용 싱글톤 패턴
+    public static DragMgr Instance { get; private set; }
 
     private RectTransform dragObj;
 
@@ -12,7 +12,7 @@ public class DragMgr : MonoBehaviour
     [HideInInspector]
     public bool isDrag = false;
 
-    private void Awake() => Instance = this; // 싱글톤 초기화
+    private void Awake() => Instance = this;
 
     public void BeginDrag(RectTransform obj)
     {

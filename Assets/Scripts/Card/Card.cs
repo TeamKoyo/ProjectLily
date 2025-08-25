@@ -12,7 +12,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         Hover(); // prefab -> detail 상태
     }
 
-    public void Hover() // mini <-> detail
+    private void Hover() // mini <-> detail
     {
         if (DragMgr.Instance.isDrag)
         {
@@ -27,7 +27,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
     }
 
-    public void Restore() // -> hand
+    private void Restore() // -> hand
     {
         transform.SetParent(uiMgr.hand);
 

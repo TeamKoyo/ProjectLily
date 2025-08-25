@@ -29,18 +29,24 @@ public class InfoMgr : MonoBehaviour
     }
     #endregion
 
-    #region Character
-    public GameObject charPrefab;
+    #region Char
+    public GameObject infoPrefab;
 
-    private int[] selectedCharId = new int[] { 0, 1, 2 };
+    #region Character
+    private int[] selectedCharIds = new int[] { 0, 1, 2 };
     public int[] GetCharIds()
     {
-        return selectedCharId;
+        return selectedCharIds;
     }
     #endregion
 
     #region Enemy
-    public GameObject enemyPrefab;
+    private int[] monsterIds = new int[] { 0, 1, 2 };
+    public int[] GetMonsterIds()
+    {
+        return monsterIds;
+    }
+    #endregion
     #endregion
 
     #region Status
