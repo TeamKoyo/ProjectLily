@@ -1,14 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BattleOrderMgr : MonoBehaviour
 {
-    private List<(int val, int idx, bool isEnemy)> diceVal; // 순서 정렬을 위한 list
+    private Dictionary<Transform, int> diceToOrderIndex = new Dictionary<Transform, int>(); // id 매핑
+    private List<(int val, int idx, bool isEnemy, int id)> order; // (dice값, 자식인덱스, 피아식별, 정보ID)
     private float rollDuration; // 굴리는 시간
     private float rollInterval; // sprite 변경 간격
     private int coCnt; // coroutine 동기화용
+    private int idx; // 현재 order 인덱스
 
     public Sprite[] rollSprites; // 회전
     public Sprite[] diceSprites; // 1~20
@@ -17,62 +20,56 @@ public class BattleOrderMgr : MonoBehaviour
     public Transform enemies;
     public GameObject dicePrefab;
 
+    public event Action OnDicePhaseEnd; // 코루틴 종료 이벤트
+
     private void Start()
     {
-        diceVal = new List<(int val, int idx, bool isEnemy)>();
+        order = new List<(int val, int idx, bool isEnemy, int id)>();
         rollDuration = 1.5f;
         rollInterval = 0.05f;
         coCnt = 0;
+        idx = 0;
     }
 
-    public void CreateSlot(int id, bool isEnemy)
+    public void CreateDice(int id, bool isEnemy)
     {
-        if(isEnemy)
+        GameObject slot;
+        if (isEnemy)
         {
-            GameObject slot = Instantiate(dicePrefab, enemies);
-            Image img = slot.transform.GetChild(0).GetComponent<Image>();
+            slot = Instantiate(dicePrefab, enemies);
         }
         else
         {
-            GameObject slot = Instantiate(dicePrefab, allies);
-            Image img = slot.transform.GetChild(0).GetComponent<Image>(); // 스프라이트 탐색 필요
+            slot = Instantiate(dicePrefab, allies);
         }
+        Image img = slot.transform.GetChild(0).GetComponent<Image>(); // id를 통해 스프라이트 탐색 필요
+
+        order.Add((0, 0, isEnemy, id));
+        diceToOrderIndex[slot.transform] = order.Count - 1;
     }
 
     public void RollDice()
     {
-        diceVal.Clear();
+        RollDice(allies);
+        RollDice(enemies);
+    }
 
-        for (int i = 0; i < allies.childCount; i++)
+    private void RollDice(Transform parent)
+    {
+        for (int i = 0; i < parent.childCount; i++)
         {
             int idx = i; // closure issue 방지
-            foreach(Transform dice in allies.GetChild(i))
+            foreach (Transform dice in parent.GetChild(i))
             {
-                if(dice.CompareTag("Dice"))
-                {
-                    StartCoroutine(Roll(rollDuration, rollInterval, dice.GetComponent<Image>(), (val) =>
-                    {
-                        diceVal.Add((val, idx, false));
-                        dice.GetComponentInChildren<Text>().text = val.ToString();
-                        ChkFinishCo();
-                    }));
+                int orderIndex = diceToOrderIndex[parent.GetChild(i)];
 
-                    break;
-                }
-            }
-
-        }
-
-        for (int i = 0; i < enemies.childCount; i++)
-        {
-            int idx = i;
-            foreach (Transform dice in enemies.GetChild(i))
-            {
                 if (dice.CompareTag("Dice"))
                 {
                     StartCoroutine(Roll(rollDuration, rollInterval, dice.GetComponent<Image>(), (val) =>
                     {
-                        diceVal.Add((val, idx, true));
+                        (int val, int idx, bool isEnemy, int id) item = order[orderIndex];
+                        order[orderIndex] = (val, idx, item.isEnemy, item.id);
+
                         dice.GetComponentInChildren<Text>().text = val.ToString();
                         ChkFinishCo();
                     }));
@@ -83,7 +80,7 @@ public class BattleOrderMgr : MonoBehaviour
         }
     }
 
-    public IEnumerator Roll(float duration, float interval, Image dice, System.Action<int> onComplete)
+    private IEnumerator Roll(float duration, float interval, Image dice, System.Action<int> onComplete)
     {
         int idx = 0; // roll 전용 변수
         float time = 0;
@@ -98,7 +95,7 @@ public class BattleOrderMgr : MonoBehaviour
             yield return new WaitForSeconds(interval);
         }
 
-        val = Random.Range(1, diceSprites.Length + 1);
+        val = UnityEngine.Random.Range(1, diceSprites.Length + 1);
         dice.sprite = diceSprites[val - 1];
 
         onComplete?.Invoke(val);
@@ -117,7 +114,7 @@ public class BattleOrderMgr : MonoBehaviour
 
     private void SortOrder() // 순서 결정
     {
-        diceVal.Sort((a, b) =>
+        order.Sort((a, b) =>
         {
             int cmp = b.val.CompareTo(a.val); // val descending
             if (cmp != 0) // 같은 val면 다음 조건
@@ -130,11 +127,11 @@ public class BattleOrderMgr : MonoBehaviour
                 return a.isEnemy ? -1 : 1; // true = 앞으로(-1) false = 뒤로(1) -> 적 우선권
             }
 
-            return a.idx.CompareTo(b.idx); // idx ascending
+            return a.idx.CompareTo(b.idx); // 전열부터
         });
     }
 
-    public IEnumerator EndDicePhase()
+    private IEnumerator EndDicePhase()
     {
         float inactiveTime = 1.5f;
 
@@ -143,5 +140,16 @@ public class BattleOrderMgr : MonoBehaviour
 
         yield return new WaitForSeconds(inactiveTime);
         dicePanel.SetActive(false);
+        OnDicePhaseEnd?.Invoke();
+    }
+
+    public (bool isEnemy, int id) ChkOrder()
+    {
+        (bool isEnemy, int id) recentOrder;
+
+        recentOrder = (order[idx].isEnemy, order[idx].id);
+        idx = (idx + 1) % order.Count;
+
+        return recentOrder;
     }
 }

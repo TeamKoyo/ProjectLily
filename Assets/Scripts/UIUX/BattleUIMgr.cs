@@ -22,40 +22,20 @@ public class BattleUIMgr : MonoBehaviour
         trans.parent.GetComponentInChildren<Text>().text = trans.childCount.ToString();
     }
 
-    public void ChgImgAlpha()
+    public void CreateTurnImg((bool isEnemy, int id) recentOrder)
     {
-        List<Image> activeImges = new List<Image>();
-        int imgCnt = 4; // 보여지는 최대 갯수
+        GameObject turnImg = new GameObject("TurnImg", typeof(RectTransform), typeof(Image));
+        turnImg.transform.SetParent(turnImgParent, false);
 
-        foreach (Transform turnImg in turnImgParent)
-        {
-            if (turnImg.gameObject.activeSelf)
-            {
-                Image img = turnImg.GetComponent<Image>();
-
-                if (img != null)
-                {
-                    activeImges.Add(img);
-                }
-            }
-        }
-
-        if (imgCnt > activeImges.Count)
-        {
-            imgCnt = activeImges.Count;
-        }
-
-        for (int i = 0; i < imgCnt; i++)
-        {
-            float alpha = Mathf.Lerp(1f, 0.1f, i * 0.3f);
-            Image img = activeImges[i];
-
-            if (img != null)
-            {
-                Color color = img.color;
-                color.a = alpha;
-                img.color = color;
-            }
-        }
+        Image img = turnImg.GetComponent<Image>();
+        img.raycastTarget = false;
+        //if(recentOrder.isEnemy)
+        //{
+        //    img.sprite = ;
+        //}
+        //else
+        //{
+        //    img.sprite = ;
+        //}
     }
 }
