@@ -11,7 +11,6 @@ public class BattleOrderMgr : MonoBehaviour
     private float rollDuration; // 굴리는 시간
     private float rollInterval; // sprite 변경 간격
     private int coCnt; // coroutine 동기화용
-    private int idx; // 현재 order 인덱스
 
     public Sprite[] rollSprites; // 회전
     public Sprite[] diceSprites; // 1~20
@@ -19,6 +18,7 @@ public class BattleOrderMgr : MonoBehaviour
     public Transform allies;
     public Transform enemies;
     public GameObject dicePrefab;
+    public int idx; // 현재 order 인덱스
 
     public event Action OnDicePhaseEnd; // 코루틴 종료 이벤트
 
@@ -151,5 +151,10 @@ public class BattleOrderMgr : MonoBehaviour
         idx = (idx + 1) % order.Count;
 
         return recentOrder;
+    }
+
+    public void DelOrder(int id)
+    {
+        order.Remove(order.Find(order => order.id == id));
     }
 }

@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
     private BattleUIMgr uiMgr;
     private int idx; // hand index
+
+    public CardInfo info;
 
     private void Start()
     {
@@ -49,27 +52,44 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         transform.SetParent(transform.parent.parent);
         transform.rotation = Quaternion.identity;
+
+        //uiMgr.ActiveTarget(info.GetTargetType(), true);
+        uiMgr.ActiveTarget("Enemy", true);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        //if(DragMgr.Instance.EnterCardUse())
-        //{
-        //    if(_cardMgr.Use())
-        //    {
-        //        transform.SetParent(BattleUIMgr.graveyard); // hand -> trash
-        //    }
-        //    else
-        //    {
-        //        Restore();
-        //    }
-        //}
-        //else
-        //{
-        //    Restore();
-        //}
-        Restore();
+        PointerEventData pointerData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject.CompareTag("CharSlot"))
+            {
+                //if (카드 사용이 가능한지)
+                //{
+                //    transform.SetParent(BattleUIMgr.graveyard); // hand -> trash
+                //}
+                //else
+                //{
+                //    Restore();
+                //}
+                transform.SetParent(uiMgr.graveyard); // hand -> trash
+                uiMgr.UpdateCntByChildren(uiMgr.graveyard);
+            }
+            else
+            {
+                Restore();
+            }
+        }
+
         DragMgr.Instance.EndDrag();
+        //uiMgr.ActiveTarget(info.GetTargetType(), false);
+        uiMgr.ActiveTarget("Enemy", false);
         Hover();
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,5 +37,51 @@ public class BattleUIMgr : MonoBehaviour
         //{
         //    img.sprite = ;
         //}
+    }
+
+    public void UpdateTurnImg()
+    {
+        turnImgParent.GetChild(0).SetSiblingIndex(turnImgParent.childCount);
+    }
+
+    public enum TargetType
+    {
+        None,
+        Enemy,
+        Ally,
+        All
+    }
+
+    public void ActiveTarget(string targetType, bool isActive)
+    {
+        if (Enum.TryParse(targetType, out TargetType type) && Enum.IsDefined(typeof(TargetType), type))
+        {
+            switch(type)
+            {
+                case TargetType.None:
+
+                    break;
+                case TargetType.Enemy:
+                    ActiveImg(enemies, isActive);
+                    break;
+                case TargetType.Ally:
+                    ActiveImg(allies, isActive);
+                    break;
+                case TargetType.All:
+                    ActiveImg(enemies, isActive);
+                    ActiveImg(allies, isActive);
+                    break;
+            }
+        }
+    }
+
+    private void ActiveImg(Transform parent, bool isActive)
+    {
+        foreach (Transform child in parent)
+        {
+            Image img = child.GetComponent<Image>();
+            img.enabled = isActive;
+            img.raycastTarget = isActive;
+        }
     }
 }

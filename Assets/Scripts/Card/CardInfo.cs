@@ -21,4 +21,9 @@ public class CardInfo : MonoBehaviour
         data = InfoMgr.Instance.database.cards.Find(c => c.cardId == cardId);
         id = data.cardId;
     }
+
+    public string GetTargetType()
+    {
+        return data.targetType;
+    }
 }

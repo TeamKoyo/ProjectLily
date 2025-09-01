@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class BattleMgr : MonoBehaviour
 {
-    (bool isEnemy, int id) recentOrder; // 현재 순서
+    private (bool isEnemy, int id) recentOrder; // 현재 순서
 
     public BattleUIMgr uiMgr;
     public BattleOrderMgr orderMgr;
@@ -72,12 +71,27 @@ public class BattleMgr : MonoBehaviour
 
         if(recentOrder.isEnemy)
         {
+            Debug.Log("Monster Action");
             // 적 행동, 카드사용 금지
+            EndOrder();
         }
         else
         {
             // 카드사용 허가
         }
+    }
+
+    public void EndOrder()
+    {
+        uiMgr.UpdateTurnImg();
+
+        if(orderMgr.idx == 0)
+        {
+            Debug.Log("end turn");
+            
+        }
+
+        GetRecentOrder();
     }
 
     public void Draw(int val) // deck -> hand
