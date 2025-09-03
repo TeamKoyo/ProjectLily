@@ -24,7 +24,7 @@ public class BattleMgr : MonoBehaviour
                     GameObject character = Instantiate(InfoMgr.Instance.infoPrefab, slot);
                     CharInfo info = character.GetComponent<CharInfo>();
 
-                    //info.SetData(charId);
+                    info.SetData(charId);
                     break;
                 }
             }

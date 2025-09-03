@@ -12,8 +12,9 @@ public class CharInfo : MonoBehaviour
 
     public void SetData(int charId)
     {
-        data = InfoMgr.Instance.database.chars.Find(c => c.charId == charId);
-        id = data.charId;
+        //data = InfoMgr.Instance.database.chars.Find(c => c.charId == charId);
+        //id = data.charId;
+        id = charId;
 
         LoadStatus(charId);
     }
@@ -28,8 +29,8 @@ public class CharInfo : MonoBehaviour
         }
         else
         {
-            status.charId = data.charId;
-            status.hp = data.maxHp;
+            //status.charId = data.charId;
+            //status.hp = data.maxHp;
         }
     }
 
