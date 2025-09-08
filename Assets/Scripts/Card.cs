@@ -1,19 +1,54 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
     private BattleMgr battleMgr;
+    private CardData data; // 정보
     private int idx; // hand index
 
-    public CardInfo info;
     public GameObject detailForm;
+    public int id;
+    public Image[] imgs;
+    public Text[] costs;
+    public Text cardName;
+    public Text description; // 효과 설명
+    #region Exclusive
+    public GameObject exclusive; // 전용 obj 부모
+    public Image charImg;
+    public Text charName;
+    #endregion
 
     private void Start()
     {
         battleMgr = Object.FindFirstObjectByType<BattleMgr>();
         detailForm.SetActive(false);
+    }
+
+    public void SetData(int cardId)
+    {
+        data = InfoMgr.Instance.database.cards.Find(c => c.cardId == cardId);
+
+        id = data.cardId;
+        //foreach(Image img in imgs)
+        //{
+
+        //}
+        foreach (Text cost in costs)
+        {
+            cost.text = data.cost.ToString();
+        }
+        cardName.text = data.cardName;
+        //description.text = 
+
+        if (!data.charName.Equals(""))
+        {
+            exclusive.SetActive(true);
+            //charImg.sprite = 
+            charName.text = data.charName;
+        }
     }
 
     private void Hover() // mini <-> detail
@@ -54,7 +89,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         transform.SetParent(transform.parent.parent);
         transform.rotation = Quaternion.identity;
 
-        battleMgr.ActiveTarget(info.GetTargetType(), true);
+        battleMgr.ActiveTarget(data.targetType, true);
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -79,7 +114,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 //{
                 //    Restore();
                 //}
-                info.Use();
+
                 transform.SetParent(battleMgr.uiMgr.graveyard); // hand -> trash
                 battleMgr.uiMgr.UpdateCntByChildren(battleMgr.uiMgr.graveyard);
             }
@@ -90,7 +125,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
 
         DragMgr.Instance.EndDrag();
-        battleMgr.ActiveTarget(info.GetTargetType(), false);
+        battleMgr.ActiveTarget(data.targetType, false);
         Hover();
     }
 }
