@@ -9,6 +9,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private CardData data; // 정보
     private int idx; // hand index
 
+    public GameObject miniForm;
     public GameObject detailForm;
     public int id;
     public Image[] imgs;
@@ -24,7 +25,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private void Start()
     {
         battleMgr = Object.FindFirstObjectByType<BattleMgr>();
-        detailForm.SetActive(false);
+        FormChgMini();
     }
 
     public void SetData(int cardId)
@@ -51,19 +52,16 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
     }
 
-    private void Hover() // mini <-> detail
+    private void FormChgMini()
     {
-        if (DragMgr.Instance.isDrag)
-        {
-            return;
-        }
+        miniForm.SetActive(true);
+        detailForm.SetActive(false);
+    }
 
-        idx = transform.GetSiblingIndex();
-
-        foreach (Transform cardForm in transform)
-        {
-            cardForm.gameObject.SetActive(!cardForm.gameObject.activeSelf);
-        }
+    private void FormChgDetail()
+    {
+        miniForm.SetActive(false);
+        detailForm.SetActive(true);
     }
 
     private void Restore() // -> hand
@@ -76,20 +74,21 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData) => Hover();
+    public void OnPointerEnter(PointerEventData eventData) => FormChgDetail();
 
-    public void OnPointerExit(PointerEventData eventData) => Hover();
+    public void OnPointerExit(PointerEventData eventData) => FormChgMini();
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Hover();
+        idx = transform.GetSiblingIndex();
+        FormChgMini();
 
         DragMgr.Instance.BeginDrag(GetComponent<RectTransform>());
 
         transform.SetParent(transform.parent.parent);
         transform.rotation = Quaternion.identity;
 
-        battleMgr.ActiveTarget(data.targetType, true);
+        battleMgr.ActiveTarget(data.targetType);
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -98,6 +97,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             position = Input.mousePosition
         };
+
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerData, results);
 
@@ -125,7 +125,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
 
         DragMgr.Instance.EndDrag();
-        battleMgr.ActiveTarget(data.targetType, false);
-        Hover();
+        battleMgr.ActiveTarget(data.targetType);
     }
 }

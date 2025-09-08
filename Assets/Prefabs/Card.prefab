@@ -703,6 +703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e0f67ef055e7347957a01185fc2f8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniForm: {fileID: 2997411106994116102}
   detailForm: {fileID: 5589732143866923398}
   id: 0
   imgs:
