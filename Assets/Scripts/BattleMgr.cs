@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class BattleMgr : MonoBehaviour
 {
@@ -17,11 +18,11 @@ public class BattleMgr : MonoBehaviour
     {
         foreach(int charId in InfoMgr.Instance.GetCharIds()) // ally
         {
-            foreach(Transform slot in uiMgr.allies)
+            foreach(Transform slot in uiMgr.allies) // 순서가 고정되므로 추후 논의
             {
                 if(slot.childCount < 1)
                 {
-                    GameObject character = Instantiate(InfoMgr.Instance.infoPrefab, slot);
+                    GameObject character = Instantiate(InfoMgr.Instance.charPrefab, slot);
                     CharInfo info = character.GetComponent<CharInfo>();
 
                     info.SetData(charId);
@@ -30,22 +31,21 @@ public class BattleMgr : MonoBehaviour
             }
 
             orderMgr.CreateDice(charId, false);
-            //uiMgr.UpdateStatus(info);
         }
 
         foreach(int monsterId in InfoMgr.Instance.GetMonsterIds()) // enemy
         {
-            GameObject monster = Instantiate(InfoMgr.Instance.infoPrefab, uiMgr.enemies);
+            GameObject monster = Instantiate(InfoMgr.Instance.charPrefab, uiMgr.enemies);
 
             orderMgr.CreateDice(monsterId, true);
         }
 
         foreach(int cardId in InfoMgr.Instance.GetCardIds()) // card
         {
-            GameObject card = Instantiate(InfoMgr.Instance.cardPrefab, uiMgr.deck);
-            CardInfo info = card.GetComponent<CardInfo>();
+            GameObject cardObj = Instantiate(InfoMgr.Instance.cardPrefab, uiMgr.deck);
+            Card card = cardObj.GetComponent<Card>();
 
-            info.SetData(cardId);
+            card.SetData(cardId);
         }
 
         uiMgr.UpdateCntByChildren(uiMgr.deck);
@@ -54,7 +54,7 @@ public class BattleMgr : MonoBehaviour
 
     private void StartBattle()
     {
-        for(int i = 0; i < InfoMgr.Instance.GetCharIds().Length + InfoMgr.Instance.GetMonsterIds().Length; i++)
+        for (int i = 0; i < InfoMgr.Instance.GetCharIds().Count + InfoMgr.Instance.GetMonsterIds().Length; i++)
         {
             recentOrder = orderMgr.ChkOrder();
             uiMgr.CreateTurnImg();
@@ -103,7 +103,7 @@ public class BattleMgr : MonoBehaviour
                 RefillDeck();
             }
 
-            int idx = Random.Range(0, uiMgr.deck.childCount); // 랜덤으로
+            int idx = UnityEngine.Random.Range(0, uiMgr.deck.childCount); // 랜덤으로
 
             uiMgr.deck.GetChild(idx).SetParent(uiMgr.hand); // 한장 뽑음
             uiMgr.UpdateCntByChildren(uiMgr.deck);
@@ -135,31 +135,37 @@ public class BattleMgr : MonoBehaviour
         uiMgr.UpdateCntByChildren(uiMgr.graveyard);
     }
 
-    public void ActiveTarget(CardInfo.TargetType type, bool isActive)
+    public enum TargetType
     {
-        switch (type)
+        Enemy,
+        Ally,
+        Self
+    }
+
+    public void ActiveTarget(string type, bool isActive)
+    {
+        if (Enum.TryParse<TargetType>(type, true, out TargetType target))
         {
-            case CardInfo.TargetType.none:
+            switch (target)
+            {
+                case TargetType.Enemy:
+                    foreach (Transform child in uiMgr.enemies)
+                    {
+                        uiMgr.ActiveSlot(child, isActive);
+                    }
+                    break;
 
-                break;
+                case TargetType.Ally:
+                    foreach (Transform child in uiMgr.allies)
+                    {
+                        uiMgr.ActiveSlot(child, isActive);
+                    }
+                    break;
 
-            case CardInfo.TargetType.enemy:
-                foreach (Transform child in uiMgr.enemies)
-                {
-                    uiMgr.ActiveSlot(child, isActive);
-                }
-                break;
-
-            case CardInfo.TargetType.ally:
-                foreach (Transform child in uiMgr.allies)
-                {
-                    uiMgr.ActiveSlot(child, isActive);
-                }
-                break;
-
-            case CardInfo.TargetType.self:
-                uiMgr.ActiveSlot(GetRecentAlly(), isActive);
-                break;
+                case TargetType.Self:
+                    uiMgr.ActiveSlot(GetRecentAlly(), isActive);
+                    break;
+            }
         }
     }
 

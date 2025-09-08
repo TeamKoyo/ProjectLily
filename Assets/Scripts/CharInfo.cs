@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class CharInfo : MonoBehaviour
 {
     private CharData data;
-    private CharStatus status;
+    private CharStatus status = new CharStatus();
 
     public int id;
     public Image img;
@@ -12,9 +12,8 @@ public class CharInfo : MonoBehaviour
 
     public void SetData(int charId)
     {
-        //data = InfoMgr.Instance.database.chars.Find(c => c.charId == charId);
-        //id = data.charId;
-        id = charId;
+        data = InfoMgr.Instance.database.chars.Find(c => c.charId == charId);
+        id = data.charId;
 
         LoadStatus(charId);
     }
@@ -29,9 +28,11 @@ public class CharInfo : MonoBehaviour
         }
         else
         {
-            //status.charId = data.charId;
-            //status.hp = data.maxHp;
+            status.charId = data.charId;
+            status.hp = data.maxHp;
         }
+
+        UpdateStatus();
     }
 
     public void UpdateStatus()

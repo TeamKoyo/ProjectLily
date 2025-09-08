@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class InfoMgr : MonoBehaviour
@@ -17,11 +16,8 @@ public class InfoMgr : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-    }
-
-    private void Start()
-    {
         SelectCard();
+        SelectChar();
     }
 
     #region Card
@@ -42,12 +38,19 @@ public class InfoMgr : MonoBehaviour
     }
     #endregion
 
-    #region Char
-    public GameObject infoPrefab;
-
     #region Character
-    private int[] selectedCharIds = new int[] { 0, 1, 2 };
-    public int[] GetCharIds()
+    public GameObject charPrefab;
+
+    private List<int> selectedCharIds = new List<int>();
+
+    private void SelectChar() // DB에서 가져오는게 아니라 변형 필요
+    {
+        foreach (CharData data in database.chars)
+        {
+            selectedCharIds.Add(data.charId);
+        }
+    }
+    public List<int> GetCharIds()
     {
         return selectedCharIds;
     }
@@ -59,7 +62,6 @@ public class InfoMgr : MonoBehaviour
     {
         return monsterIds;
     }
-    #endregion
     #endregion
 
     #region Status
