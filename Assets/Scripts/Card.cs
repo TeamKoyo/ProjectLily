@@ -7,6 +7,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 {
     private BattleMgr battleMgr;
     private CardData data; // 정보
+    private EffectData effectData; // 효과 관련정보만 포함
     private int idx; // hand index
 
     public GameObject miniForm;
@@ -25,6 +26,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private void Start()
     {
         battleMgr = Object.FindFirstObjectByType<BattleMgr>();
+        CreateEffectData();
         FormChgMini();
     }
 
@@ -52,6 +54,17 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
     }
 
+    public void CreateEffectData()
+    {
+        effectData.targetType = data.targetType;
+        effectData.targetPos = data.targetPos;
+        effectData.cost = data.cost;
+        effectData.effectKey = data.effectKey;
+        effectData.effectVal = data.effectVal;
+        effectData.round = data.round;
+        effectData.cnt = data.cnt;
+    }
+
     private void FormChgMini()
     {
         miniForm.SetActive(true);
@@ -74,6 +87,18 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
     }
 
+    private void ChkTargetType()
+    {
+        if (!data.targetPos.Equals("self"))
+        {
+            battleMgr.ActiveTarget(data.targetType);
+        }
+        else
+        {
+            battleMgr.ActiveTarget(data.targetPos);
+        }
+    }
+
     public void OnPointerEnter(PointerEventData eventData) => FormChgDetail();
 
     public void OnPointerExit(PointerEventData eventData) => FormChgMini();
@@ -88,7 +113,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         transform.SetParent(transform.parent.parent);
         transform.rotation = Quaternion.identity;
 
-        battleMgr.ActiveTarget(data.targetType);
+        ChkTargetType();
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -105,18 +130,15 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             if (result.gameObject.CompareTag("CharSlot"))
             {
-                //if (카드 사용이 가능한지)
-                //{
-                //    transform.SetParent(uiMgr.graveyard); // hand -> trash
-                //    uiMgr.UpdateCntByChildren(uiMgr.graveyard);
-                //}
-                //else
-                //{
-                //    Restore();
-                //}
-
-                transform.SetParent(battleMgr.uiMgr.graveyard); // hand -> trash
-                battleMgr.uiMgr.UpdateCntByChildren(battleMgr.uiMgr.graveyard);
+                if (battleMgr.UseCard(effectData, result.gameObject.transform.GetChild(0)))
+                {
+                    transform.SetParent(battleMgr.uiMgr.graveyard); // hand -> trash
+                    battleMgr.uiMgr.UpdateCntByChildren(battleMgr.uiMgr.graveyard);
+                }
+                else
+                {
+                    Restore();
+                }
             }
             else
             {
@@ -125,6 +147,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
 
         DragMgr.Instance.EndDrag();
-        battleMgr.ActiveTarget(data.targetType);
+        ChkTargetType();
     }
 }

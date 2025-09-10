@@ -15,7 +15,7 @@ MonoBehaviour:
   cards:
   - cardId: 1
     cardName: "\uC544\uD508\uCE74\uB4DC"
-    targetType: enemy
+    targetType: ally
     targetPos: select_single
     cost: 1
     charName: 

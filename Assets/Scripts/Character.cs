@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour, IEffect
 {
     private BattleMgr battleMgr;
     private CharData data;
@@ -48,6 +48,9 @@ public class Character : MonoBehaviour
 
     public void UpdateStatus()
     {
+        Slider hpBar = hp.GetComponent<Slider>();
+        hpBar.value = (float)status.hp / data.maxHp;
+
         Text hpTxt = hp.GetComponentInChildren<Text>();
         hpTxt.text = status.hp + " / " + data.maxHp;
     }
@@ -56,5 +59,17 @@ public class Character : MonoBehaviour
     {
         battleMgr.SetCost(data.maxCost); // debuff가 붙어있으면 적용값으로 보내주기
         battleMgr.Draw(data.drawCnt);
+    }
+
+    public void Damage(int val)
+    {
+        status.hp -= val;
+        UpdateStatus();
+    }
+
+    public void Heal(int val)
+    {
+        status.hp += val;
+        UpdateStatus();
     }
 }

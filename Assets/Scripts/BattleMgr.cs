@@ -167,29 +167,29 @@ public class BattleMgr : MonoBehaviour
 
     public void ActiveTarget(string type)
     {
-        //if (Enum.TryParse<TargetType>(type, true, out TargetType target))
-        //{
-        //    switch (target)
-        //    {
-        //        case TargetType.Enemy:
-        //            foreach (Transform child in uiMgr.enemies)
-        //            {
-        //                uiMgr.ActiveSlot(child);
-        //            }
-        //            break;
+        if (Enum.TryParse<TargetType>(type, true, out TargetType target))
+        {
+            switch (target)
+            {
+                case TargetType.Enemy:
+                    foreach (Transform child in uiMgr.enemies)
+                    {
+                        uiMgr.ActiveSlot(child);
+                    }
+                    break;
 
-        //        case TargetType.Ally:
-        //            foreach (Transform child in uiMgr.allies)
-        //            {
-        //                uiMgr.ActiveSlot(child);
-        //            }
-        //            break;
+                case TargetType.Ally:
+                    foreach (Transform child in uiMgr.allies)
+                    {
+                        uiMgr.ActiveSlot(child);
+                    }
+                    break;
 
-        //        case TargetType.Self:
-        //            uiMgr.ActiveSlot(GetRecentAlly());
-        //            break;
-        //    }
-        //}
+                case TargetType.Self:
+                    uiMgr.ActiveSlot(GetRecentAlly());
+                    break;
+            }
+        }
     }
 
     private Transform GetRecentAlly()
@@ -210,8 +210,20 @@ public class BattleMgr : MonoBehaviour
         return null;
     }
 
-    public void Effect()
+    public bool UseCard(EffectData data, Transform select)
     {
+        if(data.cost <= cost)
+        {
+            cost -= data.cost;
+            uiMgr.UpdateCost(cost);
 
+            effectMgr.Effect(data, select);
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
