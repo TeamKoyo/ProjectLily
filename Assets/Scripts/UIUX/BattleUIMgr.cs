@@ -9,6 +9,7 @@ public class BattleUIMgr : MonoBehaviour
     public Transform deck;
     public Transform hand;
     public Transform graveyard;
+    public Transform cardInfo;
 
     public void UpdateCntByChildren(Transform trans)
     {
@@ -35,6 +36,18 @@ public class BattleUIMgr : MonoBehaviour
     public void UpdateOrderImg()
     {
         turnImgParent.GetChild(0).SetSiblingIndex(turnImgParent.childCount);
+    }
+
+    public void ActiveCardInfo(bool isActive, Transform card)
+    {
+        if(isActive) // 최적화 필요
+        {
+            cardInfo.GetChild(0).GetComponent<Image>().sprite = card.GetComponent<Card>().img.sprite;
+            cardInfo.GetChild(1).GetComponent<Text>().text = card.GetComponent<Card>().cardName.text;
+            cardInfo.GetChild(2).GetComponent<Text>().text = card.GetComponent<Card>().description.text;
+        }
+
+        cardInfo.gameObject.SetActive(isActive);
     }
 
     public void ActiveSlot(Transform slot)

@@ -10,10 +10,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private EffectData effectData; // 효과 관련정보만 포함
     private int idx; // hand index
 
-    public GameObject miniForm;
-    public GameObject detailForm;
     public int id;
-    public Image[] imgs;
+    public Image img;
     public Text cardName;
     public Text description; // 효과 설명
     #region Exclusive
@@ -26,7 +24,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         battleMgr = Object.FindFirstObjectByType<BattleMgr>();
         CreateEffectData();
-        FormChgMini();
     }
 
     public void SetData(int cardId)
@@ -34,10 +31,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         data = InfoMgr.Instance.database.cards.Find(c => c.cardId == cardId);
 
         id = data.cardId;
-        //foreach(Image img in imgs)
-        //{
-
-        //}
+        //img.sprite = 
         cardName.text = data.cardName;
         //description.text = 
 
@@ -59,16 +53,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         effectData.cnt = data.cnt;
     }
 
-    private void FormChgMini()
+    private void Hover(bool isActive)
     {
-        miniForm.SetActive(true);
-        detailForm.SetActive(false);
-    }
-
-    private void FormChgDetail()
-    {
-        miniForm.SetActive(false);
-        detailForm.SetActive(true);
+        battleMgr.uiMgr.ActiveCardInfo(isActive, transform);
     }
 
     private void Restore() // -> hand
@@ -93,14 +80,14 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData) => FormChgDetail();
+    public void OnPointerEnter(PointerEventData eventData) => Hover(true);
 
-    public void OnPointerExit(PointerEventData eventData) => FormChgMini();
+    public void OnPointerExit(PointerEventData eventData) => Hover(false);
 
     public void OnPointerDown(PointerEventData eventData)
     {
         idx = transform.GetSiblingIndex();
-        FormChgMini();
+        Hover(false);
 
         DragMgr.Instance.BeginDrag(GetComponent<RectTransform>());
 

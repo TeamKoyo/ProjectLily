@@ -15,7 +15,6 @@ public class CardData
     public string cardName;
     public string targetType; // 카드 대상
     public string targetPos; // 대상 범위
-    public int cost;
     public string charName; // character 테이블 키 // 전용 카드
     public string animationKey; // 캐릭터_클립
     public string cardImg; // 리소스명
