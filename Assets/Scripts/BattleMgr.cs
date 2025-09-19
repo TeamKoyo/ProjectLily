@@ -4,6 +4,7 @@ using UnityEngine;
 public class BattleMgr : MonoBehaviour
 {
     private (bool isEnemy, int id) recentOrder; // 현재 순서
+    private int drawCnt;
 
     public BattleUIMgr uiMgr;
     public BattleOrderMgr orderMgr;
@@ -11,8 +12,8 @@ public class BattleMgr : MonoBehaviour
 
     private void Start()
     {
-        orderMgr.OnDicePhaseEnd += StartBattle; // 코루틴 종료시 실행
         CreateScene();
+        orderMgr.OnDicePhaseEnd += StartBattle; // 코루틴 종료시 실행
     }
 
     private void CreateScene()
@@ -24,9 +25,10 @@ public class BattleMgr : MonoBehaviour
                 if(slot.childCount < 1)
                 {
                     GameObject characterObj = Instantiate(InfoMgr.Instance.charPrefab, slot);
-                    Character Character = characterObj.GetComponent<Character>();
+                    Character character = characterObj.GetComponent<Character>();
 
-                    Character.SetData(charId);
+                    character.SetData(charId);
+                    drawCnt += character.GetDrawCnt();
                     break;
                 }
             }
@@ -60,14 +62,17 @@ public class BattleMgr : MonoBehaviour
             uiMgr.CreateOrderImg(recentOrder);
         }
 
-        int cnt = 3; // 첫턴에 지급할 카드 매수
-        Draw(cnt);
         // 시작연출 필요
         GetRecentOrder();
     }
 
     private void GetRecentOrder()
     {
+        if(orderMgr.idx == 0)
+        {
+            Draw(drawCnt);
+        }
+
         recentOrder = orderMgr.ChkOrder();
 
         if(recentOrder.isEnemy)
@@ -96,8 +101,6 @@ public class BattleMgr : MonoBehaviour
                 {
                     continue;
                 }
-
-                character.StartOrder();
             }
         }
     }
@@ -202,16 +205,8 @@ public class BattleMgr : MonoBehaviour
 
     public bool UseCard(EffectData data, Transform select)
     {
-        //if()
-        //{
-        //    effectMgr.Effect(data, select);
+        effectMgr.Effect(data, select);
 
-        //    return true;
-        //}
-        //else
-        //{
-        //    return false;
-        //}
-        return false;
+        return true;
     }
 }

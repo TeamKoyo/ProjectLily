@@ -24,6 +24,11 @@ public class Character : MonoBehaviour, IEffect
         LoadStatus(charId);
     }
 
+    public int GetDrawCnt()
+    {
+        return data.drawCnt;
+    }
+
     public void SaveStatus()
     {
 
@@ -55,11 +60,6 @@ public class Character : MonoBehaviour, IEffect
         hpTxt.text = status.hp + " / " + data.maxHp;
     }
 
-    public void StartOrder()
-    {
-        battleMgr.Draw(data.drawCnt);
-    }
-
     public void Damage(int val)
     {
         status.hp -= val;
@@ -68,7 +68,15 @@ public class Character : MonoBehaviour, IEffect
 
     public void Heal(int val)
     {
-        status.hp += val;
+        if (status.hp + val < data.maxHp)
+        {
+            status.hp += val;
+        }
+        else
+        {
+            status.hp = data.maxHp;
+        }
+
         UpdateStatus();
     }
 }
