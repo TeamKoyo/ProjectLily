@@ -1,0 +1,6 @@
+{
+  "maps": [
+    { "fileName": "DBDraft.xlsx", "dtoName": "CharData" },
+    { "fileName": "DBDraft.xlsx", "dtoName": "CardData" }
+  ]
+}
