@@ -1,6 +1,8 @@
 {
   "maps": [
-    { "fileName": "DBDraft.xlsx", "dtoName": "CharData" },
-    { "fileName": "DBDraft.xlsx", "dtoName": "CardData" }
+    { "fileName": "CardDraft.xlsx", "dtoName": "CardData" },
+    { "fileName": "PCStats.xlsx", "dtoName": "CharData" },
+    { "fileName": "MonsterDef.xlsx", "dtoName": "MonsterData" },
+    { "fileName": "MonsterSequence.xlsx", "dtoName": "MonsterSequence" }
   ]
 }

@@ -26,7 +26,7 @@ public class Character : MonoBehaviour, IEffect
 
     public int GetDrawCnt()
     {
-        return data.drawCnt;
+        return data.drawPoint;
     }
 
     public void SaveStatus()

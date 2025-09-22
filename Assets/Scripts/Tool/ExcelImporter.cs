@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Runtime.InteropServices.ComTypes;
 using UnityEditor;
 using UnityEngine;
 
@@ -51,10 +50,14 @@ public class ExcelImporter : EditorWindow
                 string fileName = Path.GetFileName(file);
                 string dtoName = mapping.GetDTO(fileName);
 
-                if (dtoName == nameof(CharData))
-                    db.chars = ParseTable<CharData>(reader);
-                else if (dtoName == nameof(CardData))
+                if (dtoName == nameof(CardData))
                     db.cards = ParseTable<CardData>(reader);
+                else if (dtoName == nameof(CharData))
+                    db.chars = ParseTable<CharData>(reader);
+                if (dtoName == nameof(MonsterData))
+                    db.monsters = ParseTable<MonsterData>(reader);
+                else if (dtoName == nameof(MonsterSequence))
+                    db.sequences = ParseTable<MonsterSequence>(reader);
             }
         }
 
@@ -68,34 +71,58 @@ public class ExcelImporter : EditorWindow
         List<T> list = new List<T>();
         FieldInfo[] fields = typeof(T).GetFields();
 
-        // 첫 행은 헤더 스킵
-        reader.Read();
+        reader.Read(); // 헤더 스킵
 
         while (reader.Read())
         {
+            if(reader.GetValue(0) == null) // id 없으면 더이상 읽지 않음
+            {
+                break;
+            }
+
             T obj = new T();
 
-            for (int i = 0; i < fields.Length; i++)
+            int colIndex = 0;
+            foreach (FieldInfo field in fields)
             {
-                if (i >= reader.FieldCount)
-                { 
-                    break;
-                }
+                if (field.FieldType == typeof(List<int>))
+                {
+                    List<int> values = new List<int>();
 
-                object val = reader.GetValue(i);
-                if (val == null)
-                {
-                    continue;
-                }
+                    for (int i = 0; i < 10; i++)
+                    {
+                        object val = reader.GetValue(colIndex++);
+                        if (val != null)
+                        {
+                            values.Add(Convert.ToInt32(val));
+                        }
+                    }
 
-                try
-                {
-                    object converted = Convert.ChangeType(val, fields[i].FieldType);
-                    fields[i].SetValue(obj, converted);
+                    field.SetValue(obj, values);
                 }
-                catch (Exception e)
+                else if (field.FieldType == typeof(List<string>))
                 {
-                    Debug.LogWarning($"[{typeof(T).Name}] 변환 실패: {fields[i].Name}, 값: {val}, 에러: {e.Message}");
+                    List<string> values = new List<string>();
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        object val = reader.GetValue(colIndex++);
+                        if (val != null)
+                        {
+                            values.Add(val.ToString());
+                        }
+                    }
+
+                    field.SetValue(obj, values);
+                }
+                else // 단일 값
+                {
+                    object val = reader.GetValue(colIndex++);
+                    if (val != null)
+                    {
+                        object converted = Convert.ChangeType(val, field.FieldType);
+                        field.SetValue(obj, converted);
+                    }
                 }
             }
 

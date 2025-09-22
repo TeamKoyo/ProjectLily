@@ -6,6 +6,8 @@ public class SODatabase : ScriptableObject
 {
     public List<CardData> cards;
     public List<CharData> chars;
+    public List<MonsterData> monsters;
+    public List<MonsterSequence> sequences;
 }
 
 [System.Serializable]
@@ -40,8 +42,36 @@ public class CharData
 {
     public int charId;
     public string charName;
-    public string spriteRoot;
+    //public string spriteRoot;
     public int maxHp;
-    public int maxCost;
-    public int drawCnt; // 자신의 턴에 드로우 횟수
+    public int maxMp; // 무력화
+    public int maxSp; // 방어도
+    public int drawPoint;
+}
+
+[System.Serializable]
+public class MonsterData
+{
+    public int monsterId;
+    public string MonsterName;
+    public int maxHp;
+    public int maxStagger; // 무력화
+    public string vfxStagger;
+    public string breakStagger;
+    public string startBuff;
+    public string spriteRoot;
+    public string sequenceset; // 스킬 모음
+    public string triggerKey; // 페이즈 변경 조건
+    public string vfx;
+}
+
+[System.Serializable]
+public class MonsterSequence
+{
+    public string sequenceId;
+    public string nextSequence;
+    public List<int> cardIds;
+    public List<int> priorities; // 우선순위 낮은순
+    public List<int> rates; // 우선순위가 같을 때 발동 비율
+    public List<int> groups; // 같은 그룹일 경우 연속 발동
 }

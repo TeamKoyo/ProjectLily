@@ -12,41 +12,138 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33963a53c535c06499a66df91f38bb13, type: 3}
   m_Name: Database
   m_EditorClassIdentifier: 
-  cards: []
+  cards:
+  - cardId: 1
+    cardName: "\uC544\uD508\uCE74\uB4DC"
+    targetType: enemy
+    targetPos: select_single
+    charName: 
+    animationKey: attack1
+    cardImg: 
+    cardDisc: 
+    sound: 
+    enemyHit: 
+    atkHit: 
+    effectKey: damage
+    effectVal: 10
+    round: 0
+    cnt: 0
+  - cardId: 2
+    cardName: "\uC548\uC544\uD508\uCE74\uB4DC"
+    targetType: enemy
+    targetPos: random_double
+    charName: 
+    animationKey: attack2
+    cardImg: 
+    cardDisc: 
+    sound: 
+    enemyHit: 
+    atkHit: 
+    effectKey: damage
+    effectVal: 20
+    round: 0
+    cnt: 0
+  - cardId: 3
+    cardName: "\uC804\uCCB4\uACF5\uACA9"
+    targetType: enemy
+    targetPos: all
+    charName: 
+    animationKey: attack3
+    cardImg: 
+    cardDisc: 
+    sound: 
+    enemyHit: 
+    atkHit: 
+    effectKey: damage
+    effectVal: 30
+    round: 0
+    cnt: 0
+  - cardId: 4
+    cardName: "\uD790\uCE74\uB4DC"
+    targetType: ally
+    targetPos: self
+    charName: 
+    animationKey: cast_self
+    cardImg: 
+    cardDisc: 
+    sound: 
+    enemyHit: 
+    atkHit: 
+    effectKey: heal
+    effectVal: 10
+    round: 0
+    cnt: 0
+  - cardId: 5
+    cardName: "\uBC29\uC5B4\uC99D\uAC00"
+    targetType: ally
+    targetPos: select_single
+    charName: 
+    animationKey: cast_ally
+    cardImg: 
+    cardDisc: 
+    sound: 
+    enemyHit: 
+    atkHit: 
+    effectKey: damage_down
+    effectVal: 30
+    round: 0
+    cnt: 0
+  - cardId: 6
+    cardName: "\uACF5\uACA9\uC99D\uAC00"
+    targetType: ally
+    targetPos: all
+    charName: snowleopard
+    animationKey: cast_ally
+    cardImg: 
+    cardDisc: 
+    sound: 
+    enemyHit: 
+    atkHit: 
+    effectKey: damage_up
+    effectVal: 10
+    round: 0
+    cnt: 0
   chars:
-  - charId: 1
-    charName: "\uC544\uD508\uCE74\uB4DC"
-    spriteRoot: enemy
-    maxHp: 0
-    maxCost: 1
-    drawCnt: 0
-  - charId: 2
-    charName: "\uC548\uC544\uD508\uCE74\uB4DC"
-    spriteRoot: enemy
-    maxHp: 0
-    maxCost: 2
-    drawCnt: 0
-  - charId: 3
-    charName: "\uC804\uCCB4\uACF5\uACA9"
-    spriteRoot: enemy
-    maxHp: 0
-    maxCost: 3
-    drawCnt: 0
-  - charId: 4
-    charName: "\uD790\uCE74\uB4DC"
-    spriteRoot: ally
-    maxHp: 0
-    maxCost: 3
-    drawCnt: 0
-  - charId: 5
-    charName: "\uBC29\uC5B4\uC99D\uAC00"
-    spriteRoot: ally
-    maxHp: 0
-    maxCost: 2
-    drawCnt: 0
-  - charId: 6
-    charName: "\uACF5\uACA9\uC99D\uAC00"
-    spriteRoot: ally
-    maxHp: 0
-    maxCost: 3
-    drawCnt: 0
+  - charId: 1000
+    charName: "\uB354\uBBF8 \uCE90\uB9AD\uD130"
+    maxHp: 99
+    maxMp: 99
+    maxSp: 99
+    drawPoint: 4
+  - charId: 1001
+    charName: "\uCF54\uC694\uD14C"
+    maxHp: 30
+    maxMp: 10
+    maxSp: 0
+    drawPoint: 2
+  - charId: 1002
+    charName: "\uC124\uD45C"
+    maxHp: 30
+    maxMp: 10
+    maxSp: 0
+    drawPoint: 2
+  - charId: 1003
+    charName: "\uD751\uBB18"
+    maxHp: 30
+    maxMp: 10
+    maxSp: 0
+    drawPoint: 2
+  monsters:
+  - monsterId: 12345
+    MonsterName: alea
+    maxHp: 500
+    maxStagger: 10
+    vfxStagger: 
+    breakStagger: 
+    startBuff: 
+    spriteRoot: 
+    sequenceset: alea_dummy_phase001
+    triggerKey: 
+    vfx: 
+  sequences:
+  - sequenceId: alea_dummy_phase001
+    nextSequence: next
+    cardIds: 0100000002000000030000000400000005000000060000000700000008000000090000000a000000
+    priorities: 6f000000700000007100000072000000
+    rates: 
+    groups: 
