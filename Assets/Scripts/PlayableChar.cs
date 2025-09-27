@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class PlayerableChar : Character
+﻿public class PlayableChar : Character
 {
     private CharData data;
 

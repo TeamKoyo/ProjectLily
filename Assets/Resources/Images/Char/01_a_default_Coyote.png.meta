@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b159c2d750b05744e8f2e7aae28f3933
+guid: b07c35945df5a3a4d97cc7546fcab7f9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5771770095887341159
-    second: default_Snow_0
+      213: -7552407861765795616
+    second: 01_a_default_Coyote_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: default_Snow_0
+      name: 01_a_default_Coyote_0
       rect:
         serializedVersion: 2
-        x: 56
-        y: 57
-        width: 790
-        height: 1805
+        x: 79
+        y: 0
+        width: 830
+        height: 1689
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 76656927252791050800000000000000
-      internalID: 5771770095887341159
+      spriteID: 0e015986015703790800000000000000
+      internalID: -7552407861765795616
       vertices: []
       indices: 
       edges: []

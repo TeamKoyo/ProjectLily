@@ -25,7 +25,7 @@ public class BattleMgr : MonoBehaviour
                 if(slot.childCount < 1)
                 {
                     GameObject characterObj = Instantiate(InfoMgr.Instance.charPrefab, slot);
-                    PlayerableChar character = characterObj.GetComponent<PlayerableChar>();
+                    PlayableChar character = characterObj.GetComponent<PlayableChar>();
 
                     character.SetData(charId);
                     drawCnt += character.GetDrawCnt();
@@ -105,7 +105,7 @@ public class BattleMgr : MonoBehaviour
             // 카드사용 허가
             foreach(Transform charTrans in uiMgr.allies)
             {
-                PlayerableChar character = charTrans.GetComponentInChildren<PlayerableChar>();
+                PlayableChar character = charTrans.GetComponentInChildren<PlayableChar>();
 
                 if(character.id != recentOrder.id)
                 {
@@ -207,7 +207,7 @@ public class BattleMgr : MonoBehaviour
         {
             if (slot.childCount > 0)
             {
-                PlayerableChar character = slot.GetComponentInChildren<PlayerableChar>();
+                PlayableChar character = slot.GetComponentInChildren<PlayableChar>();
 
                 if (recentOrder.id == character.id)
                 {

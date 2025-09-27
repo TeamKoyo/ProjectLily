@@ -52,10 +52,7 @@ public class BattleUIMgr : MonoBehaviour
 
     public void ActiveSlot(Transform slot)
     {
-        slot.GetComponent<RectTransform>().sizeDelta = slot.GetChild(0).GetComponent<RectTransform>().sizeDelta;
-
-        Image img = slot.GetComponent<Image>();
+        Image img = slot.GetChild(0).GetComponent<Image>();
         img.enabled = !img.IsActive();
-        img.raycastTarget = img.enabled;
     }
 }

@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 55af947cdfa8814438abad9e8682b413
+guid: abb79ff9a58b4aa49b87ada3b9e64a28
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -862320584741733845
-    second: default_Enemy_0
+      213: 242132963785278543
+    second: 04_a_default_Enemy_3_0
+  - first:
+      213: 1746008404426931177
+    second: 04_a_default_Enemy_3_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +49,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: default_Enemy_0
+      name: 04_a_default_Enemy_3_0
       rect:
         serializedVersion: 2
-        x: 660
-        y: 75
-        width: 2286
-        height: 2074
+        x: 2
+        y: 0
+        width: 1982
+        height: 3400
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b2a36f73ffb6804f0800000000000000
-      internalID: -862320584741733845
+      spriteID: f4485dec5aa3c5300800000000000000
+      internalID: 242132963785278543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04_a_default_Enemy_3_1
+      rect:
+        serializedVersion: 2
+        x: 1984
+        y: 1121
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ebb6b0a4611b3810800000000000000
+      internalID: 1746008404426931177
       vertices: []
       indices: 
       edges: []
@@ -125,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -134,7 +159,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      04_a_default_Enemy_3_0: 242132963785278543
+      04_a_default_Enemy_3_1: 1746008404426931177
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

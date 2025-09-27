@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e021d45136123724aa82dc85532acd85
+guid: d8038b1a40c65f64f88f55a283c9c24a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1469254154384878
-    second: default_BlackCat_0
+      213: 3768314061383871508
+    second: 03_a_default_BlackCat_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: default_BlackCat_0
+      name: 03_a_default_BlackCat_0
       rect:
         serializedVersion: 2
-        x: 41
-        y: 42
-        width: 891
-        height: 1976
+        x: 62
+        y: 17
+        width: 882
+        height: 1956
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 21a0b0c98b7cafff0800000000000000
-      internalID: -1469254154384878
+      spriteID: 41c25e66cadbb4430800000000000000
+      internalID: 3768314061383871508
       vertices: []
       indices: 
       edges: []
