@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -103,12 +103,12 @@ TextureImporter:
       name: 01_a_default_Coyote_0
       rect:
         serializedVersion: 2
-        x: 79
+        x: 0
         y: 0
-        width: 830
-        height: 1689
+        width: 1000
+        height: 1700
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 7a2963b90dafa0541b69f6cbe18edc9b
     internalID: 0
     vertices: []
     indices: 
@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      01_a_default_Coyote_0: -7552407861765795616
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -103,12 +103,12 @@ TextureImporter:
       name: 03_a_default_BlackCat_0
       rect:
         serializedVersion: 2
-        x: 62
-        y: 17
-        width: 882
-        height: 1956
+        x: 0
+        y: 0
+        width: 1000
+        height: 2000
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c9bf5a534d40b2645ae550a88c2925b8
     internalID: 0
     vertices: []
     indices: 
@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      03_a_default_BlackCat_0: 3768314061383871508
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

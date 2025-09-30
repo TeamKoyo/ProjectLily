@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -103,12 +103,12 @@ TextureImporter:
       name: 02_a_default_Snow_0
       rect:
         serializedVersion: 2
-        x: 78
-        y: 18
-        width: 787
-        height: 1798
+        x: 0
+        y: 16
+        width: 1000
+        height: 1800
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 831cf42e862faef4eab8662fb5caffe8
     internalID: 0
     vertices: []
     indices: 
@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      02_a_default_Snow_0: 7813093302755911365
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

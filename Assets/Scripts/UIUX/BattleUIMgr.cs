@@ -38,6 +38,39 @@ public class BattleUIMgr : MonoBehaviour
         turnImgParent.GetChild(0).SetSiblingIndex(turnImgParent.childCount);
     }
 
+    public void AdjustRatio(Image img)
+    {
+        Sprite sprite = img.sprite;
+        float w = sprite.rect.width;
+        float h = sprite.rect.height;
+        float ratio = h / w;
+
+        float targetW = img.rectTransform.sizeDelta.x;
+        float targetH = targetW * ratio;
+
+        img.rectTransform.sizeDelta = new Vector2(targetW, targetH);
+
+        if (!img.transform.parent.CompareTag("CharSlot")) // ActionPanel 미적용
+        {
+            RectTransform imgTrans = img.rectTransform;
+            RectTransform parentTrans = img.transform.parent.GetComponent<RectTransform>();
+            Vector3 pos = imgTrans.anchoredPosition;
+
+            float targetY = (imgTrans.sizeDelta.y - parentTrans.sizeDelta.y) / 2;
+
+            if(targetY < 0) // 포지션을 targetUI랑 맞추기 위해 아래로 내림
+            {
+                pos.y = targetY;
+            }
+            else
+            {
+                pos.y = -targetY;
+            }
+
+            imgTrans.anchoredPosition = pos;
+        }
+    }
+
     public void ActiveCardInfo(bool isActive, Transform card)
     {
         if(isActive) // 최적화 필요

@@ -28,6 +28,7 @@ public class BattleMgr : MonoBehaviour
                     PlayableChar character = characterObj.GetComponent<PlayableChar>();
 
                     character.SetData(charId);
+                    uiMgr.AdjustRatio(character.img);
                     drawCnt += character.GetDrawCnt();
                     break;
                 }
@@ -46,6 +47,7 @@ public class BattleMgr : MonoBehaviour
                     Monster monster = monsterObj.GetComponent<Monster>();
 
                     monster.SetData(monsterId);
+                    uiMgr.AdjustRatio(monster.img);
                     break;
                 }
             }
@@ -105,11 +107,14 @@ public class BattleMgr : MonoBehaviour
             // 카드사용 허가
             foreach(Transform charTrans in uiMgr.allies)
             {
-                PlayableChar character = charTrans.GetComponentInChildren<PlayableChar>();
-
-                if(character.id != recentOrder.id)
+                if(charTrans.childCount > 0)
                 {
-                    continue;
+                    PlayableChar character = charTrans.GetComponentInChildren<PlayableChar>();
+
+                    if (character.id != recentOrder.id)
+                    {
+                        continue;
+                    }
                 }
             }
         }
