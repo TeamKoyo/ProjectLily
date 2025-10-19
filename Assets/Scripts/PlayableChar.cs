@@ -2,12 +2,16 @@
 {
     private CharData data;
 
-    public void SetData(int charId)
+    public override void SetData(int charId)
     {
         data = InfoMgr.Instance.database.chars.Find(c => c.charId == charId);
         id = data.charId;
+        spriteRoot = data.charName + '_';
 
         LoadStatus(charId);
+
+        SetSprite("Idle");
+        UpdateHp();
     }
 
     protected override int GetMaxHp()

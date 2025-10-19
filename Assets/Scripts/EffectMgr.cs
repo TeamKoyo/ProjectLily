@@ -60,21 +60,25 @@ public class EffectMgr : MonoBehaviour
     {
         EffectData effectData = InfoMgr.Instance.database.effects.Find(e => e.effectKey == effectKey);
 
-        if(effectDic.TryGetValue(effectData.type, out var action))
+        if(effectDic.TryGetValue(effectData.type, out Action<EffectData> action))
         {
             action.Invoke(effectData);
         }
     }
 
-    public void Effect(string effectKey, Transform target)
+    public List<Transform> Effect(string effectKey, Transform target)
     {
         EffectData effectData = InfoMgr.Instance.database.effects.Find(e => e.effectKey == effectKey);
+        List<Transform> targets = new List<Transform>();
 
-        if (selectEffectDic.TryGetValue(effectData.type, out var action))
+        if (selectEffectDic.TryGetValue(effectData.type, out Action<EffectData, Transform> effect))
         {
             // 여기에 타입별 분기(single / next)
-            action.Invoke(effectData, target);
+            effect.Invoke(effectData, target);
+            targets.Add(target);
         }
+
+        return targets;
     }
 
     private void Draw(EffectData data)

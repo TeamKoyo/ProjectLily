@@ -95,6 +95,25 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             transform.SetSiblingIndex(idx);
         }
+
+        battleMgr.InactiveTarget();
+    }
+
+    private void ChkCategory()
+    {
+        if(Enum.TryParse<CardCategory>(data.cardCategory, true, out CardCategory category))
+        {
+            switch(category)
+            {
+                case CardCategory.act:
+                    battleMgr.EndOrder(); // 턴 종료
+                    break;
+            }
+
+        }
+
+        transform.SetParent(battleMgr.uiMgr.graveyard); // hand -> trash
+        battleMgr.uiMgr.UpdateCntByChildren(battleMgr.uiMgr.graveyard);
     }
 
     public void OnPointerEnter(PointerEventData eventData) => Hover(true);
@@ -103,78 +122,67 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        idx = transform.GetSiblingIndex();
-        Hover(false);
+        if(DragMgr.Instance.isPlayerTurn)
+        {
+            idx = transform.GetSiblingIndex();
+            Hover(false);
 
-        DragMgr.Instance.BeginDrag(GetComponent<RectTransform>());
+            DragMgr.Instance.BeginDrag(GetComponent<RectTransform>());
+            transform.SetParent(transform.parent.parent);
+            transform.rotation = Quaternion.identity;
 
-        transform.SetParent(transform.parent.parent);
-        transform.rotation = Quaternion.identity;
-
-        battleMgr.ActiveTarget(data.effectKey);
+            battleMgr.ActiveTarget(data.effectKey);
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        bool skip = true; // raycast시 card무시
-        PointerEventData pointerData = new PointerEventData(EventSystem.current)
+        if(DragMgr.Instance.isDrag)
         {
-            position = Input.mousePosition
-        };
-
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(pointerData, results);
-
-        if(isSelect)
-        {
-            foreach (RaycastResult result in results)
+            PointerEventData pointerData = new PointerEventData(EventSystem.current)
             {
-                if(skip)
-                {
-                    skip = false;
-                    continue;
-                }
+                position = Input.mousePosition
+            };
 
-                if (result.gameObject.CompareTag("Char"))
-                {
-                    battleMgr.UseCard(data.effectKey, result.gameObject.transform);
-                    transform.SetParent(battleMgr.uiMgr.graveyard); // hand -> trash
-                    battleMgr.uiMgr.UpdateCntByChildren(battleMgr.uiMgr.graveyard);
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
 
-                    break;
-                }
-                else
+            if (isSelect)
+            {
+                foreach (RaycastResult result in results)
                 {
-                    Restore();
+                    if (result.gameObject.CompareTag("Char"))
+                    {
+                        battleMgr.UseCard(data.effectKey, result.gameObject.transform);
+                        ChkCategory();
+
+                        break;
+                    }
+                    else
+                    {
+                        Restore();
+                    }
                 }
             }
-        }
-        else
-        {
-            foreach (RaycastResult result in results)
+            else
             {
-                if (skip)
+                foreach (RaycastResult result in results)
                 {
-                    skip = false;
-                    continue;
-                }
-                
-                if (result.gameObject.CompareTag("CharPanel"))
-                {
-                    battleMgr.UseCard(data.effectKey);
-                    transform.SetParent(battleMgr.uiMgr.graveyard); // hand -> trash
-                    battleMgr.uiMgr.UpdateCntByChildren(battleMgr.uiMgr.graveyard);
+                    if (result.gameObject.CompareTag("CharPanel"))
+                    {
+                        battleMgr.UseCard(data.effectKey);
+                        ChkCategory();
 
-                    break;
-                }
-                else
-                {
-                    Restore();
+                        break;
+                    }
+                    else
+                    {
+                        Restore();
+                    }
                 }
             }
-        }
 
-        battleMgr.InactiveTarget();
-        DragMgr.Instance.EndDrag();
+            DragMgr.Instance.EndDrag();
+        }
     }
 }

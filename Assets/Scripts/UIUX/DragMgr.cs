@@ -8,8 +8,7 @@ public class DragMgr : MonoBehaviour
     private RectTransform dragObj;
 
     public Canvas canvas; // cam 참조용
-
-    [HideInInspector]
+    public bool isPlayerTurn = false;
     public bool isDrag = false;
 
     private void Awake() => Instance = this;

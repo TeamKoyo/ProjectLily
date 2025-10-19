@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
@@ -41,39 +43,6 @@ public class BattleUIMgr : MonoBehaviour
         turnImgParent.GetChild(0).SetSiblingIndex(turnImgParent.childCount);
     }
 
-    public void AdjustRatio(Image img)
-    {
-        Sprite sprite = img.sprite;
-        float w = sprite.rect.width;
-        float h = sprite.rect.height;
-        float ratio = h / w;
-
-        float targetW = img.rectTransform.sizeDelta.x;
-        float targetH = targetW * ratio;
-
-        img.rectTransform.sizeDelta = new Vector2(targetW, targetH);
-
-        if (!img.transform.parent.CompareTag("CharSlot")) // ActionPanel 미적용
-        {
-            RectTransform imgTrans = img.rectTransform;
-            RectTransform parentTrans = img.transform.parent.GetComponent<RectTransform>();
-            Vector3 pos = imgTrans.anchoredPosition;
-
-            float targetY = (imgTrans.sizeDelta.y - parentTrans.sizeDelta.y) / 2;
-
-            if(targetY < 0) // 포지션을 targetUI랑 맞추기 위해 아래로 내림
-            {
-                pos.y = targetY;
-            }
-            else
-            {
-                pos.y = -targetY;
-            }
-
-            imgTrans.anchoredPosition = pos;
-        }
-    }
-
     public void ActiveCardInfo(bool isActive, Transform card)
     {
         if(isActive) // 최적화 필요
@@ -96,40 +65,62 @@ public class BattleUIMgr : MonoBehaviour
         }
     }
 
-    public void ActiveAction((bool isEnemy, int id) recentOrder, Transform target)
+    public async void ActiveAction(bool isEnemy, string spriteRoot, List<Transform> targets)
     {
         // 이미지 전부 idle상태 -> 조금 대기 -> 공격자 스프라이트 -> 애니메이션 실행 -> 종료시 피격자 스프라이트 및 이펙트 -> 종료
         actionPanel.gameObject.SetActive(true);
 
+        string mainTag = isEnemy ? "Enemy" : "Ally";
+
         foreach (Transform area in actionPanel)
         {
-            if(recentOrder.isEnemy)
+            if (area.CompareTag(mainTag))
             {
-                if (area.CompareTag("Enemy"))
-                {
-                    string spriteKey;
-
-                    //Addressables.LoadAssetAsync<Sprite>(spriteKey).Completed += (AsyncOperationHandle<Sprite> handle) =>
-                    //{
-                    //    if (handle.Status == AsyncOperationStatus.Succeeded)
-                    //    {
-                    //        targetImage.sprite = handle.Result;
-                    //    }
-                    //    else
-                    //    {
-                    //        Debug.LogError($"스프라이트 로드 실패: {spriteKey}");
-                    //    }
-                    //};
-                }
+                // 시전자
+                await SetActionAsync(area.GetChild(0).GetComponent<Image>(), spriteRoot + "Idle");
             }
             else
             {
-                if (area.CompareTag("Ally"))
+                // 피격자
+                for (int i = 0; i < targets.Count; i++)
                 {
+                    string targetSpriteRoot = isEnemy
+                        ? targets[i].GetComponent<PlayableChar>().spriteRoot
+                        : targets[i].GetComponent<Monster>().spriteRoot;
 
+                    Image img = area.GetChild(i).GetComponent<Image>();
+                    await SetActionAsync(img, targetSpriteRoot + "Idle");
                 }
             }
         }
+    }
+
+    private async Task SetActionAsync(Image img, string spriteKey)
+    {
+        AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(spriteKey);
+        await handle.Task;
+
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            img.sprite = handle.Result;
+            AdjustRatio(handle.Result, img);
+        }
+        else
+        {
+            Debug.LogWarning($"[Addressables] Sprite Load 실패: {spriteKey}");
+        }
+    }
+
+    private void AdjustRatio(Sprite sprite, Image targetImg)
+    {
+        float w = sprite.rect.width;
+        float h = sprite.rect.height;
+        float ratio = h / w;
+
+        float targetW = targetImg.rectTransform.sizeDelta.x;
+        float targetH = targetW * ratio;
+
+        targetImg.rectTransform.sizeDelta = new Vector2(targetW, targetH);
     }
 
     public void PlayMoveArrow(bool toRight, bool enemyFront)
