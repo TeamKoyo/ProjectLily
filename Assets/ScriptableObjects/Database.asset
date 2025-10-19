@@ -58,6 +58,36 @@ MonoBehaviour:
     vfx: 
     sfx: 
     duration: 0
+  - cardId: 4
+    cardName: "\uBAAC\uC2A4\uD130 \uACF5\uACA9"
+    cardClass: 
+    cardCategory: 
+    cardGroup: 
+    rarity: 
+    cardKeyword: 
+    desc: "\uBAAC\uC2A4\uD130 \uACF5\uACA9"
+    effectKey: monatk
+    rarityIcon: 
+    classIcon: 
+    categoryIcon: 
+    vfx: 
+    sfx: 
+    duration: 0
+  - cardId: 5
+    cardName: "\uBAAC\uC2A4\uD130\uACF5\uACA92"
+    cardClass: 
+    cardCategory: 
+    cardGroup: 
+    rarity: 
+    cardKeyword: 
+    desc: "\uBAAC\uC2A4\uD130 \uACF5\uACA92"
+    effectKey: monatk2
+    rarityIcon: 
+    classIcon: 
+    categoryIcon: 
+    vfx: 
+    sfx: 
+    duration: 0
   effects:
   - effectKey: koyodream
     type: draw
@@ -113,47 +143,76 @@ MonoBehaviour:
     searchRange: 
     searchType: 
     searchId: 0
+  - effectKey: monatk
+    type: damage
+    targetFaction: ally
+    targetOperator: position
+    targetPos: 1110
+    val: 8
+    pushVal: 0
+    refOperator: 
+    refTarget: 
+    refType: 
+    conditionVal: 0
+    conditionMore: 
+    repeatTarget: 
+    repeatCnt: 0
+    refVal: 0
+    searchRange: 
+    searchType: 
+    searchId: 0
+  - effectKey: monatk2
+    type: damage
+    targetFaction: ally
+    targetOperator: position
+    targetPos: 1000
+    val: 10
+    pushVal: 0
+    refOperator: 
+    refTarget: 
+    refType: 
+    conditionVal: 0
+    conditionMore: 
+    repeatTarget: 
+    repeatCnt: 0
+    refVal: 0
+    searchRange: 
+    searchType: 
+    searchId: 0
   chars:
-  - charId: 1000
-    charName: "\uB354\uBBF8 \uCE90\uB9AD\uD130"
-    maxHp: 99
-    maxMp: 99
-    maxSp: 99
-    drawPoint: 4
   - charId: 1001
-    charName: "\uCF54\uC694\uD14C"
+    charName: Coyote
     maxHp: 30
     maxMp: 10
     maxSp: 0
     drawPoint: 2
   - charId: 1002
-    charName: "\uC124\uD45C"
+    charName: Snow
     maxHp: 30
     maxMp: 10
     maxSp: 0
     drawPoint: 2
   - charId: 1003
-    charName: "\uD751\uBB18"
+    charName: BlackCat
     maxHp: 30
     maxMp: 10
     maxSp: 0
     drawPoint: 2
   monsters:
   - monsterId: 12345
-    MonsterName: alea
+    MonsterName: Hongryun
     maxHp: 500
     maxStagger: 10
     vfxStagger: 
     breakStagger: 
     startBuff: 
-    spriteRoot: 
-    sequenceset: alea_dummy_phase001
+    sequenceId: alea_dummy_phase001
     triggerKey: 
     vfx: 
   sequences:
   - sequenceId: alea_dummy_phase001
     nextSequence: next
-    cardIds: 0100000002000000030000000400000005000000060000000700000008000000090000000a000000
-    priorities: 6f000000700000007100000072000000
-    rates: 
+    cardIds: 0400000005000000
+    priorities: 6f0000006f000000
+    rates: 280000003c000000
     groups: 

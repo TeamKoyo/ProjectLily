@@ -48,7 +48,7 @@ public class InfoMgr : MonoBehaviour
     {
         for(int i = 0; i < 3; i++)
         {
-            selectedCharIds.Add(database.chars[i+1].charId);
+            selectedCharIds.Add(database.chars[i].charId);
         }
     }
 

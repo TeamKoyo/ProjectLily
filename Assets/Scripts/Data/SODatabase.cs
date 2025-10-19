@@ -31,6 +31,12 @@ public class CardData
     public int duration;
 }
 
+public enum CardCategory
+{
+    act,
+    burst
+}
+
 [System.Serializable]
 public class EffectData
 {
@@ -95,8 +101,7 @@ public class MonsterData
     public string vfxStagger;
     public string breakStagger;
     public string startBuff;
-    public string spriteRoot;
-    public string sequenceset; // 스킬 모음
+    public string sequenceId; // 스킬 모음
     public string triggerKey; // 페이즈 변경 조건
     public string vfx;
 }
