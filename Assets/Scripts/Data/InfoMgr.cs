@@ -30,7 +30,10 @@ public class InfoMgr : MonoBehaviour
     {
         foreach(CardData data in database.cards)
         {
-            selectedCardId.Add(data.cardId);
+            if(data.cardClass != "monster")
+            {
+                selectedCardId.Add(data.cardId);
+            }
         }
     }
     public List<int> GetCardIds()
@@ -60,6 +63,7 @@ public class InfoMgr : MonoBehaviour
 
     #region Enemy
     public GameObject monsterPrefab;
+    public GameObject bigMonsterPrefab;
 
     private List<int> monsterIds = new List<int>();
 

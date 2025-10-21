@@ -15,6 +15,16 @@ MonoBehaviour:
   m_GroupName: Characters
   m_GUID: 5e6f104295b53b04db4ce530db27b0fd
   m_SerializeEntries:
+  - m_GUID: 375627002d0664142806cae96153a058
+    m_Address: Coyote_Attack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e01970a596793343b56e834dc75091a
+    m_Address: Coyote_Heal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a4a3a03d3d7e37640a9a4d548364a9be
     m_Address: Snow_Idle
     m_ReadOnly: 0
@@ -22,6 +32,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b07c35945df5a3a4d97cc7546fcab7f9
     m_Address: Coyote_Idle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c21c6a86e1a4f9d4b8c3918116a4a551
+    m_Address: Coyote_Hit
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -60,7 +60,7 @@ MonoBehaviour:
     duration: 0
   - cardId: 4
     cardName: "\uBAAC\uC2A4\uD130 \uACF5\uACA9"
-    cardClass: 
+    cardClass: monster
     cardCategory: 
     cardGroup: 
     rarity: 
@@ -75,7 +75,7 @@ MonoBehaviour:
     duration: 0
   - cardId: 5
     cardName: "\uBAAC\uC2A4\uD130\uACF5\uACA92"
-    cardClass: 
+    cardClass: monster
     cardCategory: 
     cardGroup: 
     rarity: 
@@ -215,4 +215,4 @@ MonoBehaviour:
     cardIds: 0400000005000000
     priorities: 6f0000006f000000
     rates: 280000003c000000
-    groups: 
+    groups: 0000000000000000

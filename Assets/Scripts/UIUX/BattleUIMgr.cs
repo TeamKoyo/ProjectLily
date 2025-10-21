@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 public class BattleUIMgr : MonoBehaviour
 {
@@ -67,7 +68,9 @@ public class BattleUIMgr : MonoBehaviour
 
     public async void ActiveAction(bool isEnemy, string spriteRoot, List<Transform> targets)
     {
-        // 이미지 전부 idle상태 -> 조금 대기 -> 공격자 스프라이트 -> 애니메이션 실행 -> 종료시 피격자 스프라이트 및 이펙트 -> 종료
+        float posY = 0f;
+        Vector2 originSize = Vector2.zero; // 초기설정 복구용
+
         actionPanel.gameObject.SetActive(true);
 
         string mainTag = isEnemy ? "Enemy" : "Ally";
@@ -77,7 +80,12 @@ public class BattleUIMgr : MonoBehaviour
             if (area.CompareTag(mainTag))
             {
                 // 시전자
-                await SetActionAsync(area.GetChild(0).GetComponent<Image>(), spriteRoot + "Idle");
+                Image attacker = area.GetChild(0).GetComponent<Image>();
+                posY = attacker.rectTransform.position.y;
+                originSize = attacker.rectTransform.sizeDelta;
+
+                attacker.enabled = true;
+                await SetActionAsync(attacker, spriteRoot + "Idle");
             }
             else
             {
@@ -89,10 +97,39 @@ public class BattleUIMgr : MonoBehaviour
                         : targets[i].GetComponent<Monster>().spriteRoot;
 
                     Image img = area.GetChild(i).GetComponent<Image>();
+                    img.enabled = true;
                     await SetActionAsync(img, targetSpriteRoot + "Idle");
                 }
             }
         }
+
+        await Task.Delay(1000); // 1초 대기
+
+        foreach (Transform area in actionPanel)
+        {
+            if (area.CompareTag(mainTag))
+            {
+                Image attacker = area.GetChild(0).GetComponent<Image>();
+                await SetActionAsync(attacker, spriteRoot + "Attack"); // 공격자 스프라이트
+            }
+        }
+        // 애니 실행
+        // 애니 종료 콜백 받으면 피격자 스프라이트
+        await Task.Delay(1000);
+        // 초기화 / position w/h 원상복구
+        foreach (Transform area in actionPanel)
+        {
+            if (area.CompareTag(mainTag))
+            {
+                Image attacker = area.GetChild(0).GetComponent<Image>();
+                attacker.enabled = false;
+                attacker.sprite = null;
+                attacker.rectTransform.position = new Vector2(attacker.rectTransform.position.x, posY);
+                attacker.rectTransform.sizeDelta = originSize;
+            }
+        }
+
+        actionPanel.gameObject.SetActive(false);
     }
 
     private async Task SetActionAsync(Image img, string spriteKey)
@@ -103,7 +140,15 @@ public class BattleUIMgr : MonoBehaviour
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             img.sprite = handle.Result;
-            AdjustRatio(handle.Result, img);
+
+            if(spriteKey.Contains("Idle"))
+            {
+                AdjustRatio(handle.Result, img, true);
+            }
+            else
+            {
+                AdjustRatio(handle.Result, img, false);
+            }
         }
         else
         {
@@ -111,38 +156,27 @@ public class BattleUIMgr : MonoBehaviour
         }
     }
 
-    private void AdjustRatio(Sprite sprite, Image targetImg)
+    private void AdjustRatio(Sprite sprite, Image targetImg, bool isIdle)
     {
-        float w = sprite.rect.width;
-        float h = sprite.rect.height;
-        float ratio = h / w;
+        RectTransform imgTrans = targetImg.rectTransform;
+        Vector2 originSize = imgTrans.sizeDelta;
+        float originW = originSize.x;
+        float originH = originSize.y;
 
-        float targetW = targetImg.rectTransform.sizeDelta.x;
-        float targetH = targetW * ratio;
+        float ratioW = sprite.rect.width / 1000f;
+        float ratioH = sprite.rect.height / 1000f;
 
-        targetImg.rectTransform.sizeDelta = new Vector2(targetW, targetH);
-    }
+        float targetW = originW * ratioW;
+        float targetH = isIdle ? originW * ratioH : originH;
+        imgTrans.sizeDelta = new Vector2(targetW, targetH);
 
-    public void PlayMoveArrow(bool toRight, bool enemyFront)
-    {
-        //// 방향 설정 (오른쪽 true, 왼쪽 false)
-        //Vector3 allyScale = allyArrow.localScale;
-        //Vector3 enemyScale = enemyArrow.localScale;
+        if(isIdle)  // 캐릭터별 높이 맞추기
+        {
+            Vector2 pos = imgTrans.anchoredPosition;
+            float offsetY = Mathf.Abs(targetH - originH) * 0.5f;
 
-        //float dir = toRight ? 1f : -1f;
-        //allyScale.x = Mathf.Abs(allyScale.x) * dir;
-        //enemyScale.x = Mathf.Abs(enemyScale.x) * dir;
-
-        //allyArrow.localScale = allyScale;
-        //enemyArrow.localScale = enemyScale;
-
-        //// 겹쳤을 때 순서
-        //if (!enemyFront) // last X -> 2번째자식
-        //    allyArrow.SetAsLastSibling();
-        //else
-        //    enemyArrow.SetAsLastSibling();
-
-        //// 애니메이션 실행
-        //animator.Play("ArrowMove", -1, 0f);
+            pos.y += (targetH > originH) ? offsetY : -offsetY;
+            imgTrans.anchoredPosition = pos;
+        }
     }
 }

@@ -33,8 +33,7 @@ public class CardData
 
 public enum CardCategory
 {
-    act,
-    burst
+    act
 }
 
 [System.Serializable]

@@ -23,7 +23,7 @@ public class BattleMgr : MonoBehaviour
     {
         foreach(int charId in InfoMgr.Instance.GetCharIds()) // ally
         {
-            foreach(Transform slot in uiMgr.allies) // 순서가 고정되므로 추후 논의
+            foreach(Transform slot in uiMgr.allies)
             {
                 if(slot.childCount < 1)
                 {
@@ -41,11 +41,19 @@ public class BattleMgr : MonoBehaviour
 
         foreach(int monsterId in InfoMgr.Instance.GetMonsterIds()) // enemy
         {
-            foreach (Transform slot in uiMgr.enemies) // 순서가 고정되므로 추후 논의
+            foreach (Transform slot in uiMgr.enemies)
             {
                 if (slot.childCount < 1)
                 {
-                    GameObject monsterObj = Instantiate(InfoMgr.Instance.monsterPrefab, slot);
+                    GameObject monsterObj = Instantiate(InfoMgr.Instance.bigMonsterPrefab, slot);
+                    //if (InfoMgr.Instance.database.monsters.Find(m => m.monsterId == monsterId).)
+                    //{
+                    //    monsterObj = Instantiate(InfoMgr.Instance.monsterPrefab, slot);
+                    //}
+                    //else
+                    //{
+                    //    monsterObj = Instantiate(InfoMgr.Instance.bigMonsterPrefab, slot);
+                    //}
                     Monster monster = monsterObj.GetComponent<Monster>();
 
                     monster.SetData(monsterId);
