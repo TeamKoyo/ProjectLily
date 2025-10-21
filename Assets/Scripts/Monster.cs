@@ -73,15 +73,7 @@ public class Monster : Character
                 }
             }
 
-            if (seqData.rates[sortedPriority[currentIdx].idx] > 0)
-            {
-                CalRate(lastIdx);
-            }
-            else if (seqData.groups[sortedPriority[currentIdx].idx] != 0)
-            {
-                UseGroupCards(lastIdx);
-            }
-
+            CalRate(lastIdx);
 
             NextIdx();
         }
@@ -117,25 +109,55 @@ public class Monster : Character
         int idx = currentIdx;
         while(idx <= lastIdx)
         {
+            if(seqData.rates[sortedPriority[idx].idx] == 0) // null
+            {
+                idx++;
+                continue;
+            }
+
             totalRate += seqData.rates[sortedPriority[idx].idx];
             idx++;
         }
         idx = currentIdx;
 
+        if (totalRate == 0) // rate없이 group만 존재
+        {
+            UseGroupCards(seqData.groups[idx], lastIdx);
+            return;
+        }
+
         int rateVal = Random.Range(1, totalRate + 1);
         int currentRate = seqData.rates[sortedPriority[idx].idx];
 
-        while(currentRate < rateVal)
+        while(currentRate <= rateVal)
         {
             idx++;
             currentRate += seqData.rates[sortedPriority[idx].idx];
         }
 
-        SelectCard(sortedPriority[idx].idx);
+        int selectedIdx = sortedPriority[idx].idx;
+        SelectCard(selectedIdx);
+
+        if(seqData.groups[selectedIdx] != 0) // notNull
+        {
+            UseGroupCards(seqData.groups[selectedIdx], lastIdx);
+        }
     }
 
-    private void UseGroupCards(int lastIdx)
+    private void UseGroupCards(int group, int lastIdx)
     {
+        int idx = currentIdx;
 
+        while(idx <= lastIdx)
+        {
+            int selectedIdx = sortedPriority[idx].idx;
+
+            if (seqData.groups[selectedIdx] == group && seqData.rates[selectedIdx] == 0) // 확률이 없는 것들만 사용
+            {
+                SelectCard(selectedIdx);
+            }
+
+            idx++;
+        }
     }
 }
