@@ -13,6 +13,7 @@ public abstract class Character : MonoBehaviour
     public string spriteRoot;
     public Image img;
     public RectTransform hp;
+    public int orderIdx; // turnImg 구분용
 
     public static event Action<Character> OnCharDeath;
 
