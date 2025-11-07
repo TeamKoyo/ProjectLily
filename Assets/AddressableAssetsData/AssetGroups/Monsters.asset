@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Monsters
   m_GUID: f991178fdfef7144d8c878eb62465401
   m_SerializeEntries:
-  - m_GUID: abb79ff9a58b4aa49b87ada3b9e64a28
+  - m_GUID: d304a490171d25d4281317984c24697d
     m_Address: Hongryun_Beast_Idle
     m_ReadOnly: 0
     m_SerializedLabels: []

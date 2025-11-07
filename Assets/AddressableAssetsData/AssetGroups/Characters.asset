@@ -20,13 +20,43 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 447b5c0a44e0cd148a0d77ab47695454
+    m_Address: BlackCat_Hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 54259cfbf5027b44bbb49c74265a5dac
+    m_Address: Snow_Attack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 674f5520c442cdb47ae2ee8a92a6f4d8
+    m_Address: Snow_Heal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6e01970a596793343b56e834dc75091a
     m_Address: Coyote_Heal
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 771809d6000a46841be46ab0d1e7c2b2
+    m_Address: BlackCat_Heal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a4a3a03d3d7e37640a9a4d548364a9be
     m_Address: Snow_Idle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6b18f499c1d03c45a22316100148bd6
+    m_Address: BlackCat_Attack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af6fa2eb19fabbe4293623d2a8c78289
+    m_Address: Snow_Hit
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
