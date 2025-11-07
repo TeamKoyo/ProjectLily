@@ -15,11 +15,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public Image img;
     public Text cardName;
     public Text description; // 효과 설명
-    #region Exclusive
-    public GameObject exclusive; // 전용 obj 부모
-    public Image charImg;
-    public Text charName;
-    #endregion
 
     private void Start()
     {
@@ -34,13 +29,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         //img.sprite = 
         cardName.text = data.cardName;
         description.text = data.desc;
-
-        if (!data.cardClass.Equals(""))
-        {
-            exclusive.SetActive(true);
-            //charImg.sprite = 
-            charName.text = data.cardClass;
-        }
 
         GetIsSelect();
     }
@@ -101,19 +89,18 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     private void ChkCategory()
     {
-        if(Enum.TryParse<CardCategory>(data.cardCategory, true, out CardCategory category))
+        transform.SetParent(battleMgr.uiMgr.graveyard); // hand -> graveyard
+        battleMgr.uiMgr.UpdateCntByChildren(battleMgr.uiMgr.graveyard);
+
+        if (Enum.TryParse<CardCategory>(data.cardCategory, true, out CardCategory category))
         {
             switch(category)
             {
                 case CardCategory.act:
-                    battleMgr.EndOrder(); // 턴 종료
+                    battleMgr.uiMgr.OnSpriteChangeFinished += battleMgr.EndOrder; // 턴 종료
                     break;
             }
-
         }
-
-        transform.SetParent(battleMgr.uiMgr.graveyard); // hand -> graveyard
-        battleMgr.uiMgr.UpdateCntByChildren(battleMgr.uiMgr.graveyard);
     }
 
     public void OnPointerEnter(PointerEventData eventData) => Hover(true);
@@ -153,8 +140,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 {
                     if (result.gameObject.CompareTag("Char"))
                     {
-                        battleMgr.UseCard(data.effectKey, result.gameObject.transform);
                         ChkCategory();
+                        battleMgr.UseCard(data.effectKey, result.gameObject.transform);
 
                         break;
                     }
@@ -170,8 +157,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 {
                     if (result.gameObject.CompareTag("CharPanel"))
                     {
-                        battleMgr.UseCard(data.effectKey);
                         ChkCategory();
+                        battleMgr.UseCard(data.effectKey);
 
                         break;
                     }

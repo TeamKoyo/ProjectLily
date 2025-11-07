@@ -65,7 +65,7 @@ public abstract class Character : MonoBehaviour
     {
         status.hp -= val;
 
-        if (status.hp < 0)
+        if (status.hp <= 0)
         {
             status.hp = 0;
             OnCharDeath?.Invoke(this);

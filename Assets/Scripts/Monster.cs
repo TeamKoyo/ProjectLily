@@ -93,7 +93,7 @@ public class Monster : Character
 
     private bool ChkPriorityAboutSame(int idx)
     {
-        if(sortedPriority[idx].val != sortedPriority[idx + 1].val)
+        if(idx + 1 == sortedPriority.Length || sortedPriority[idx].val != sortedPriority[idx + 1].val)
         {
             return false;
         }

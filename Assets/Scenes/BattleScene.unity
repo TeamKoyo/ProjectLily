@@ -2172,6 +2172,7 @@ GameObject:
   - component: {fileID: 1993662172}
   - component: {fileID: 1993662171}
   - component: {fileID: 1993662170}
+  - component: {fileID: 1993662173}
   m_Layer: 5
   m_Name: TurnPanel
   m_TagString: Untagged
@@ -2195,8 +2196,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 240, y: -65}
-  m_SizeDelta: {x: 480, y: 80}
+  m_AnchoredPosition: {x: 350, y: -65}
+  m_SizeDelta: {x: 700, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1993662170
 MonoBehaviour:
@@ -2221,7 +2222,7 @@ MonoBehaviour:
   m_CellSize: {x: 80, y: 80}
   m_Spacing: {x: 40, y: 0}
   m_Constraint: 1
-  m_ConstraintCount: 6
+  m_ConstraintCount: 8
 --- !u!114 &1993662171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2260,6 +2261,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993662167}
   m_CullTransparentMesh: 1
+--- !u!114 &1993662173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993662167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1 &2020540468
 GameObject:
   m_ObjectHideFlags: 0

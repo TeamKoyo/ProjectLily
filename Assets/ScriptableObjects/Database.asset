@@ -16,11 +16,11 @@ MonoBehaviour:
   - cardId: 1
     cardName: "\uCF54\uC694\uD14C\uAFC8"
     cardClass: koyote
-    cardCategory: act
+    cardCategory: 
     cardGroup: dream
     rarity: common
     cardKeyword: eliminate
-    desc: "\uCF54\uC694\uD14C\uAC00 \uAFC8\uC744 \uAFD4\uC694"
+    desc: "1\uC7A5 \uBF51\uAE30"
     effectKey: koyodream
     rarityIcon: 
     classIcon: 
@@ -31,11 +31,11 @@ MonoBehaviour:
   - cardId: 2
     cardName: "\uCF54\uC694\uD14C\uD380\uCE58"
     cardClass: koyote
-    cardCategory: burst
+    cardCategory: act
     cardGroup: 
     rarity: rare
     cardKeyword: 
-    desc: "\uCF54\uC694\uD14C\uAC00 \uCCD0\uC694"
+    desc: "1\uBC88 3\uBC88\uC790\uB9AC 5\uB370\uBBF8\uC9C0 / \uD134\uC885\uB8CC"
     effectKey: koyopunch
     rarityIcon: 
     classIcon: 
@@ -46,11 +46,11 @@ MonoBehaviour:
   - cardId: 3
     cardName: "\uCF54\uC694\uD14C\uD314\uCF58\uD380\uCE58"
     cardClass: koyote
-    cardCategory: 
+    cardCategory: act
     cardGroup: 
     rarity: rare
     cardKeyword: 
-    desc: "\uCF54\uC694\uD14C\uAC00 \uAC1C\uC314\uAC8C \uCCD0\uC694"
+    desc: "\uD0C0\uAC9F 50\uB370\uBBF8\uC9C0 / \uD134\uC885\uB8CC"
     effectKey: koyoppunch
     rarityIcon: 
     classIcon: 
@@ -88,6 +88,36 @@ MonoBehaviour:
     vfx: 
     sfx: 
     duration: 0
+  - cardId: 6
+    cardName: "\uCF54\uC694\uD14C\uD790"
+    cardClass: koyote
+    cardCategory: 
+    cardGroup: 
+    rarity: 
+    cardKeyword: 
+    desc: "\uD0C0\uAC9F 3\uD68C\uBCF5"
+    effectKey: koyoheal
+    rarityIcon: 
+    classIcon: 
+    categoryIcon: 
+    vfx: 
+    sfx: 
+    duration: 0
+  - cardId: 7
+    cardName: "\uCF54\uC694\uD14C\uD7902"
+    cardClass: koyote
+    cardCategory: act
+    cardGroup: 
+    rarity: 
+    cardKeyword: 
+    desc: "\uD0C0\uAC9F 5\uD68C\uBCF5 / \uD134\uC885\uB8CC"
+    effectKey: koyoheal2
+    rarityIcon: 
+    classIcon: 
+    categoryIcon: 
+    vfx: 
+    sfx: 
+    duration: 0
   effects:
   - effectKey: koyodream
     type: draw
@@ -111,7 +141,7 @@ MonoBehaviour:
     type: damage
     targetFaction: enemy
     targetOperator: position
-    targetPos: 1000
+    targetPos: 1010
     val: 5
     pushVal: 0
     refOperator: 
@@ -179,6 +209,42 @@ MonoBehaviour:
     searchRange: 
     searchType: 
     searchId: 0
+  - effectKey: koyoheal
+    type: heal
+    targetFaction: ally
+    targetOperator: single
+    targetPos: 0
+    val: 3
+    pushVal: 0
+    refOperator: 
+    refTarget: 
+    refType: 
+    conditionVal: 0
+    conditionMore: 
+    repeatTarget: 
+    repeatCnt: 0
+    refVal: 0
+    searchRange: 
+    searchType: 
+    searchId: 0
+  - effectKey: koyoheal2
+    type: heal
+    targetFaction: ally
+    targetOperator: single
+    targetPos: 0
+    val: 5
+    pushVal: 0
+    refOperator: 
+    refTarget: 
+    refType: 
+    conditionVal: 0
+    conditionMore: 
+    repeatTarget: 
+    repeatCnt: 0
+    refVal: 0
+    searchRange: 
+    searchType: 
+    searchId: 0
   chars:
   - charId: 1001
     charName: Coyote
@@ -201,6 +267,29 @@ MonoBehaviour:
   monsters:
   - monsterId: 12345
     MonsterName: Hongryun_Beast
+    isBig: 1
+    maxHp: 55
+    maxStagger: 10
+    vfxStagger: 
+    breakStagger: 
+    startBuff: 
+    sequenceId: alea_dummy_phase001
+    triggerKey: 
+    vfx: 
+  - monsterId: 123
+    MonsterName: Hongryun
+    isBig: 0
+    maxHp: 10
+    maxStagger: 10
+    vfxStagger: 
+    breakStagger: 
+    startBuff: 
+    sequenceId: alea_dummy_phase001
+    triggerKey: 
+    vfx: 
+  - monsterId: 1234
+    MonsterName: Hongryun
+    isBig: 0
     maxHp: 10
     maxStagger: 10
     vfxStagger: 

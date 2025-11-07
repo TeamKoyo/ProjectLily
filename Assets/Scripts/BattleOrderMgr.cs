@@ -156,6 +156,19 @@ public class BattleOrderMgr : MonoBehaviour
 
     public void DelOrder(int id) // 몬스터와 캐릭터가 겹치게 아이디를 만들 경우 변경 필요
     {
-        order.Remove(order.Find(order => order.id == id));
+        var item = order.Find(order => order.id == id);
+        int delIdx = order.IndexOf(item);
+
+        if(delIdx < idx)
+        {
+            idx -= 1;
+        }
+
+        order.Remove(item);
+
+        if(idx == order.Count) // OutOfRange가 발생할 경우
+        {
+            idx = 0;
+        }
     }
 }
