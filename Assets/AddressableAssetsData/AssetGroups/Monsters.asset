@@ -15,8 +15,48 @@ MonoBehaviour:
   m_GroupName: Monsters
   m_GUID: f991178fdfef7144d8c878eb62465401
   m_SerializeEntries:
+  - m_GUID: 4aef87f0893a2ff489b144ce37e41222
+    m_Address: Mob1_Idle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f59e0096844bf34bbf99be7e27bc4fa
+    m_Address: Mob2_Idle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b43452df315b2840bc8fc4a268ef0ae
+    m_Address: Mob2_Hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68a5b818f24c3264cb9e24b64849f747
+    m_Address: Mob2_Heal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b0c5d2b171488a5429574214a1812c0f
+    m_Address: Mob1_Heal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8f44c34c707bb04c8789697fc964098
+    m_Address: Mob1_Attack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd2699d6f54ee504db4209d04fa0f27c
+    m_Address: Mob2_Attack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d304a490171d25d4281317984c24697d
     m_Address: Hongryun_Beast_Idle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f6345262f4b09744c86ee078bc76bf98
+    m_Address: Mob1_Hit
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

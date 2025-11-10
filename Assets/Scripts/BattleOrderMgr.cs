@@ -44,7 +44,7 @@ public class BattleOrderMgr : MonoBehaviour
         }
         Image img = slot.transform.GetChild(0).GetComponent<Image>();
 
-        StartCoroutine(GetComponent<BattleUIMgr>().CoSetSprite(img, spriteRoot + "Idle")); // 프로필로 변경
+        StartCoroutine(GetComponent<BattleUIMgr>().CoSetSprite(img, spriteRoot + "Profile"));
         order.Add((0, 0, isEnemy, id));
         diceToOrderIndex[slot.transform] = order.Count - 1;
     }
