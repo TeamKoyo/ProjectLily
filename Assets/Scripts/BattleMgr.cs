@@ -266,18 +266,21 @@ public class BattleMgr : MonoBehaviour
                     {
                         int divisor = 1000 / (int)Mathf.Pow(10, i);
 
-                        if(blankIdx.Contains(i))
-                        {
-                            pos %= divisor;
-                            continue;
-                        }
-
                         if (pos / divisor == 1)
                         {
-                            uiMgr.ActiveSlot(range[idx], true);
-                            autoTarget.Add(range[idx].GetChild(0));
-                            idx++;
+                            if (blankIdx.Contains(i))
+                            {
+                                uiMgr.ActiveSlot(range[idx - 1], true);
+                                autoTarget.Add(range[idx - 1].GetChild(0));
+                            }
+                            else
+                            {
+                                uiMgr.ActiveSlot(range[idx], true);
+                                autoTarget.Add(range[idx].GetChild(0));
+                            }
                         }
+
+                        idx++;
                         pos %= divisor;
                     }
                     break;
@@ -337,7 +340,7 @@ public class BattleMgr : MonoBehaviour
             // 자동 타겟
             foreach (Transform target in autoTarget)
             {
-                key ??= effectMgr.Effect(effectKey, target); // key 한번만 초기화
+                key = effectMgr.Effect(effectKey, target);
             }
         }
         else
@@ -365,6 +368,7 @@ public class BattleMgr : MonoBehaviour
     private void DeathChar(Character character)
     {
         uiMgr.OnSpriteChangeHit += Delete;
+        uiMgr.OnCharDeath += uiMgr.ChkResult;
 
         void Delete()
         {
@@ -398,16 +402,33 @@ public class BattleMgr : MonoBehaviour
                     }
                     else if (!nextSlot.gameObject.activeSelf)
                     {
+                        if(slot.childCount < 1) // 2칸몹이 움직일 경우
+                        {
+                            slot.gameObject.SetActive(false);
+                            nextSlot.gameObject.SetActive(true);
+                            slot = nextSlot;
+
+                            continue;
+                        }
+
                         nextSlot.gameObject.SetActive(true);
                         blank++;
 
-                        nextChar = slot.parent.GetChild(idx + 1 + blank).GetChild(0);
-                        localPos = nextChar.localPosition;
+                        if(idx + 1 + blank < slot.parent.childCount)
+                        {
+                            Transform blankNextSlot = slot.parent.GetChild(idx + 1 + blank);
 
-                        nextChar.SetParent(slot);
-                        nextChar.localPosition = localPos;
+                            if(blankNextSlot.childCount > 0)
+                            {
+                                nextChar = blankNextSlot.GetChild(0);
+                                localPos = nextChar.localPosition;
 
-                        slot = nextSlot;
+                                nextChar.SetParent(slot);
+                                nextChar.localPosition = localPos;
+
+                                slot = nextSlot;
+                            }
+                        }
                     }
                 }
             }

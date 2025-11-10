@@ -17,9 +17,11 @@ public class BattleUIMgr : MonoBehaviour
     public Transform hand;
     public Transform graveyard;
     public Transform cardInfo;
+    public Transform result; // 결과창
 
     public event Action OnSpriteChangeHit;
     public event Action OnSpriteChangeFinished;
+    public event Action OnCharDeath;
 
     public void UpdateCntByChildren(Transform trans)
     {
@@ -53,7 +55,7 @@ public class BattleUIMgr : MonoBehaviour
 
                 if (monster.id == order.id)
                 {
-                    StartCoroutine(CoSetSprite(img, monster.spriteRoot + "Idle"));
+                    StartCoroutine(CoSetSprite(img, monster.spriteRoot + "Profile"));
                     monster.orderIdx = orderIdx;
                 }
             }
@@ -63,7 +65,7 @@ public class BattleUIMgr : MonoBehaviour
 
                 if (character.id == order.id)
                 {
-                    StartCoroutine(CoSetSprite(img, character.spriteRoot + "Idle"));
+                    StartCoroutine(CoSetSprite(img, character.spriteRoot + "Profile"));
                     character.orderIdx = orderIdx;
                 }
             }
@@ -123,6 +125,7 @@ public class BattleUIMgr : MonoBehaviour
         yield return new WaitForSeconds(1f); // 1초 대기
         OnSpriteChangeHit?.Invoke(); // deathChar
         yield return null; // destroy 처리
+        OnCharDeath?.Invoke(); // chkResult
 
         if (characterImg != null)
         {
@@ -166,6 +169,23 @@ public class BattleUIMgr : MonoBehaviour
     {
         yield return new WaitUntil(() => endCnt == startCnt);
 
+        ChkResult();
         OnSpriteChangeFinished?.Invoke(); // endOrder
+    }
+
+    public void ChkResult()
+    {
+        OnCharDeath -= ChkResult;
+
+        if(allies.GetChild(0).childCount > 0 && enemies.GetChild(0).childCount < 1)
+        {
+            result.gameObject.SetActive(true);
+            result.GetComponentInChildren<Text>().text = "승리!";
+        }
+        else if(allies.GetChild(0).childCount < 1 && enemies.GetChild(0).childCount > 0)
+        {
+            result.gameObject.SetActive(true);
+            result.GetComponentInChildren<Text>().text = "패배..";
+        }
     }
 }

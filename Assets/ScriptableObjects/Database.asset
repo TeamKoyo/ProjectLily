@@ -265,21 +265,10 @@ MonoBehaviour:
     maxSp: 0
     drawPoint: 2
   monsters:
-  - monsterId: 12345
-    MonsterName: Hongryun_Beast
-    isBig: 1
-    maxHp: 55
-    maxStagger: 10
-    vfxStagger: 
-    breakStagger: 
-    startBuff: 
-    sequenceId: alea_dummy_phase001
-    triggerKey: 
-    vfx: 
   - monsterId: 123
-    MonsterName: Hongryun
+    MonsterName: Mob1
     isBig: 0
-    maxHp: 10
+    maxHp: 20
     maxStagger: 10
     vfxStagger: 
     breakStagger: 
@@ -288,9 +277,20 @@ MonoBehaviour:
     triggerKey: 
     vfx: 
   - monsterId: 1234
-    MonsterName: Hongryun
+    MonsterName: Mob2
     isBig: 0
-    maxHp: 10
+    maxHp: 20
+    maxStagger: 10
+    vfxStagger: 
+    breakStagger: 
+    startBuff: 
+    sequenceId: alea_dummy_phase001
+    triggerKey: 
+    vfx: 
+  - monsterId: 12345
+    MonsterName: Hongryun_Beast
+    isBig: 1
+    maxHp: 55
     maxStagger: 10
     vfxStagger: 
     breakStagger: 
